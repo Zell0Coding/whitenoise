@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">White Noise</string>
+    <string name="locate">ru</string>
+    <string name="sleeping_mode">Режим сна</string>
+    <string name="timer">Таймер</string>
+    <string name="add_timer">Добавить таймер</string>
+    <string name="settings">Настройки</string>
+    <string name="asleep">Установить время засыпания</string>
+    <string name="selected_sound">Выбранные звуки</string>
+    <string name="timing">Выбор времени</string>
+    <string name="days_of_week">Выбор дней недели</string>
+    <string name="support">По всем вопросам о работе приложения обращаться на почту:</string>
+</resources>

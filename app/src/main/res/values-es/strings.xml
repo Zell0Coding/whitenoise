@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">White Noise</string>
+    <string name="locate">es</string>
+    <string name="sleeping_mode">Modo de dormir</string>
+    <string name="timer">Temporizador</string>
+    <string name="add_timer">Agregar temporizador</string>
+    <string name="settings">Configuraciones</string>
+    <string name="asleep">Establecer el tiempo para conciliar el sueño</string>
+    <string name="selected_sound">Sonidos seleccionados</string>
+    <string name="timing">Sincronización</string>
+    <string name="days_of_week">Seleccionar días de la semana</string>
+    <string name="support">Apoyo</string>
+</resources>

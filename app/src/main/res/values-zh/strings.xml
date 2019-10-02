@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">White Noise</string>
+    <string name="add_timer">添加计时器</string>
+    <string name="asleep">设定入睡的时间</string>
+    <string name="days_of_week">选择星期几</string>
+    <string name="locate">zh</string>
+    <string name="selected_sound">选定的声音</string>
+    <string name="settings">设置</string>
+    <string name="sleeping_mode">睡眠模式</string>
+    <string name="support">支持</string>
+    <string name="timer">计时器</string>
+    <string name="timing">定时</string>
+</resources>

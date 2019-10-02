@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">White Noise</string>
+    <string name="locate">id</string>
+    <string name="sleeping_mode">Mode tidur</string>
+    <string name="timer">Timer</string>
+    <string name="add_timer">Tambahkan timer</string>
+    <string name="settings">Pengaturan</string>
+    <string name="asleep">Atur waktu untuk tertidur</string>
+    <string name="selected_sound">Suara yang dipilih</string>
+    <string name="timing">Pengaturan waktu</string>
+    <string name="days_of_week">Pilih hari dalam seminggu</string>
+    <string name="support">Dukungan</string>
+</resources>
