@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#14192D"
+    tools:context=".Controllers.MainActivity">
+
+
+    <androidx.gridlayout.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:rowCount="3"
+        app:columnCount="3"
+        app:alignmentMode="alignMargins"
+        app:columnOrderPreserved="false"
+        android:layout_weight="4"
+        android:padding="14dp">
+
+        <!-- ROW 1 -->
+        <!-- COUNT 1 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/white_noise"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/white_noise"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitXY">
+                </ImageButton>
+
+                <ImageView
+                    android:id="@+id/white_noise_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_outline_play_circle_filled_white"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/transparent">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+        <!-- COUNT 2 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/rain"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/rain"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitXY">
+                </ImageButton>
+
+                <ImageView
+                    android:id="@+id/rain_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_outline_play_circle_filled_white"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/transparent">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+        <!-- COUNT 3 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/thunder"
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/thunder"
+                    android:scaleType="fitXY">
+                </ImageButton>
+
+                <ImageView
+                    android:id="@+id/thunder_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_outline_play_circle_filled_white"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/transparent">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- ROW 2 -->
+        <!-- COUNT 1 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/ocean"
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ocean"
+                    android:scaleType="fitXY">
+                </ImageButton>
+
+                <ImageView
+                    android:id="@+id/ocean_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_outline_play_circle_filled_white"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/transparent">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+        <!-- COUNT 2 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/wind"
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/wind"
+                    android:scaleType="fitXY">
+                </ImageButton>
+
+                <ImageView
+                    android:id="@+id/wind_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_outline_play_circle_filled_white"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/transparent">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+        <!-- COUNT 3 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/river"
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/river"
+                    android:scaleType="fitXY">
+                </ImageButton>
+
+                <ImageView
+                    android:id="@+id/river_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_outline_play_circle_filled_white"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/transparent">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- ROW 3 -->
+        <!-- COUNT 1 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/fire"
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/fire"
+                    android:scaleType="fitXY">
+                </ImageButton>
+
+                <ImageView
+                    android:id="@+id/fire_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_outline_play_circle_filled_white"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/transparent">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+        <!-- COUNT 2 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/forest"
+                    android:background="@android:color/transparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/forests_bird"
+                    android:scaleType="fitXY">
+                </ImageButton>
+
+                <ImageView
+                    android:id="@+id/forest_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_outline_play_circle_filled_white"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/transparent">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+        <!-- COUNT 3 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/night"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/night"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitXY">
+                </ImageButton>
+
+                <ImageView
+                    android:id="@+id/night_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_outline_play_circle_filled_white"
+                    android:layout_centerInParent="true"
+                    android:background="@android:color/transparent">
+
+                </ImageView>
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.gridlayout.widget.GridLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/play_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
