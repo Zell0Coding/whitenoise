@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import com.meathammerstudio.whitenoise.Controllers.PlayMusicFragment;
 import com.meathammerstudio.whitenoise.Models.Sound;
 import com.meathammerstudio.whitenoise.R;
 import com.meathammerstudio.whitenoise.Utills.ItemTouchHelperAdapter;
+import com.meathammerstudio.whitenoise.Utills.i_helper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,19 +26,20 @@ import java.util.List;
 
 public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  implements ItemTouchHelperAdapter {
 
-
     public interface updateButton{
-        void update(String name, boolean enable);
+         void update(String name, boolean enable);
     }
     private updateButton update;
-
+    private i_helper.i_sound sound_helper;
 
     private static final int HEADER = 0;
     private static final int NORMAL_ITEM = 1;
+
     private List<Sound> sounds;
 
-    public musicAdapter(updateButton _update){
+    public musicAdapter(updateButton _update, i_helper.i_sound _sound_helper){
         update = _update;
+        sound_helper = _sound_helper;
         sounds = new ArrayList<>();
         sounds.add(null);
     }
@@ -63,13 +66,15 @@ public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         if(holder instanceof SoundView){
-            Sound sound = getItem(position);
+            final Sound sound = getItem(position);
             final SoundView view = (SoundView)holder;
+            final int _pos = position;
 
             view.sound_picture.setImageResource(sound.getPath_img());
+            view.volume.setProgress(50);
 
             if(sound.isEnabled()){
                 view.sound_enable.setImageResource(R.drawable.ic_feather_pause_circle);
@@ -80,15 +85,45 @@ public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             view.sound_picture.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    if(getItem(position).isEnabled()){
+                    if(sound.isEnabled()){
                         view.sound_enable.setImageResource(R.drawable.ic_outline_play_circle_filled_white);
-                        getItem(position).setEnabled(false);
-                        update.update(getItem(position).getName(),false);
+                        sound.setEnabled(false);
+                        update.update(sound.getName(),false);
+                        sound_helper.stopSound(sound);
                     }else{
                         view.sound_enable.setImageResource(R.drawable.ic_feather_pause_circle);
-                        getItem(position).setEnabled(true);
-                        update.update(getItem(position).getName(),true);
+                        sound.setEnabled(true);
+                        update.update(sound.getName(),true);
+                        sound_helper.playSound(sound);
                     }
+                }
+            });
+
+            view.sound_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    onItemDismiss(_pos);
+
+                }
+            });
+
+            view.volume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    float vol = (float)progress/100;
+                    sound.setVolume(vol);
+                    sound_helper.changeVolume(sound);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
                 }
             });
 
@@ -113,8 +148,10 @@ public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (position==0)
             return;
         update.update(sounds.get(position).getName(),false);
+        sound_helper.deleteSound(sounds.get(position));
         sounds.remove(position);
         notifyItemRemoved(position);
+        notifyItemRangeChanged(position, sounds.size());
     }
 
     private Sound getItem(int position){
@@ -127,6 +164,7 @@ public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             }
         }
         sounds.add(_sound);
+        sound_helper.addSound(_sound);
         notifyItemChanged(sounds.size()-1);
     }
 
@@ -143,13 +181,15 @@ public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     class SoundView extends RecyclerView.ViewHolder{
 
         ImageButton sound_picture;
+        ImageButton sound_delete;
         ImageView sound_enable;
         AppCompatSeekBar volume;
 
          SoundView(@NonNull View itemView){
             super(itemView);
-             sound_picture = itemView.findViewById(R.id.sound_image);
+            sound_picture = itemView.findViewById(R.id.sound_image);
             sound_enable = itemView.findViewById(R.id.sound_indicator);
+            sound_delete = itemView.findViewById(R.id.sound_delete);
             volume = itemView.findViewById(R.id.sound_volume);
 
         }

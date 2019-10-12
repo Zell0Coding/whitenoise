@@ -5,16 +5,18 @@ public class Sound {
     private String name;
     private int path_img;
     private int path_sound;
-    private double volume;
+    private int sound_sec;
+    private float volume;
     private boolean enabled;
 
 
-    public Sound(String _name,int _path_img,int _path_sound, double _volume, boolean _enable){
+    public Sound(String _name,int _path_img,int _path_sound, float _volume, boolean _enable, int _sound_sec){
         this.name = _name;
         this.path_img = _path_img;
         this.volume = _volume;
         this.enabled = _enable;
         this.path_sound = _path_sound;
+        this.sound_sec = _sound_sec;
     }
 
     public int getPath_img() {
@@ -37,16 +39,23 @@ public class Sound {
         return name;
     }
 
+    public int getSound_sec() {
+        return sound_sec;
+    }
+
+    public void setSound_sec(int sound_sec) {
+        this.sound_sec = sound_sec;
+    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public double getVolume() {
+    public float getVolume() {
         return volume;
     }
 
-    public void setVolume(double volume) {
+    public void setVolume(float volume) {
         this.volume = volume;
     }
 

@@ -1,6 +1,7 @@
 package com.meathammerstudio.whitenoise.Controllers;
 
 import android.content.Context;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.gridlayout.widget.GridLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,16 +22,17 @@ import com.meathammerstudio.whitenoise.Adapters.SwipeToDeleteCallback;
 import com.meathammerstudio.whitenoise.Adapters.musicAdapter;
 import com.meathammerstudio.whitenoise.Models.Sound;
 import com.meathammerstudio.whitenoise.R;
+import com.meathammerstudio.whitenoise.Utills.Manager;
 import com.meathammerstudio.whitenoise.Utills.Utill;
+import com.meathammerstudio.whitenoise.Utills.i_helper;
 
-public class PlayMusicFragment extends Fragment implements View.OnClickListener,  musicAdapter.updateButton  {
+public class PlayMusicFragment extends Fragment implements View.OnClickListener,  musicAdapter.updateButton, i_helper.i_sound  {
 
-    public interface playsound{
-        void play(String name);
-    }
-
-    private playsound Listener; // сервис для прослушивания музыки
     private ItemTouchHelper mItemTouchHelper;
+
+    private Manager mManager;
+
+    private GridLayout mGridLayout;
 
     private musicAdapter mMusicAdapter;
     private RecyclerView mRecyclerView;
@@ -55,18 +58,9 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     private ImageView nightIndicator;
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try {
-            Listener = (playsound) getActivity();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getActivity().toString() + " must implement playsound");
-        }
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mManager = Manager.getInstance();
     }
 
     @Nullable
@@ -83,6 +77,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
         fireIndicator = view.findViewById(R.id.fire_indicator);
         forestIndicator = view.findViewById(R.id.forest_indicator);
         nightIndicator = view.findViewById(R.id.night_indicator);
+        mGridLayout = view.findViewById(R.id.grid_layout);
 
         whiteNoise = view.findViewById(R.id.white_noise);
         rain = view.findViewById(R.id.rain);
@@ -106,10 +101,12 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
         night.setOnClickListener(this);
 
 
+        mGridLayout.setMinimumHeight(mManager.getWidth()-96-28);
+
 
         mRecyclerView = view.findViewById(R.id.play_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mMusicAdapter = new musicAdapter(this);
+        mMusicAdapter = new musicAdapter(this,this);
         mRecyclerView.setAdapter(mMusicAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -119,9 +116,16 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ItemTouchHelper.Callback callback = new SwipeToDeleteCallback(mMusicAdapter);
-        mItemTouchHelper = new ItemTouchHelper(callback);
+
+        /*
+
+        /ItemTouchHelper.Callback callback = new SwipeToDeleteCallback(mMusicAdapter);
+                mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
+
+
+         */
+
     }
 
 
@@ -129,53 +133,52 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.white_noise:
-                Sound white_sound = new Sound("white_noise",Utill.WHITE_NOISE_IMG,Utill.WHITE_NOISE,50,true);
+                Sound white_sound = new Sound("white_noise",Utill.WHITE_NOISE_IMG,Utill.WHITE_NOISE,0.5f,true,0);
                 whiteNoiseIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(white_sound);
                 break;
             case R.id.rain:
-                Sound rain = new Sound("rain",Utill.RAIN_IMG,Utill.RAIN,50,true);
+                Sound rain = new Sound("rain",Utill.RAIN_IMG,Utill.RAIN,0.5f,true,0);
                 rainIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(rain);
                 break;
             case R.id.thunder:
-                Sound thunder = new Sound("thunder",Utill.THUNDER_IMG,Utill.THUNDER,50,true);
+                Sound thunder = new Sound("thunder",Utill.THUNDER_IMG,Utill.THUNDER,0.5f,true,0);
                 thunderIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(thunder);
                 break;
             case R.id.ocean:
-                Sound ocean = new Sound("ocean",Utill.OCEAN_IMG,Utill.OCEAN,50,true);
+                Sound ocean = new Sound("ocean",Utill.OCEAN_IMG,Utill.OCEAN,0.5f,true,0);
                 oceanIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(ocean);
                 break;
             case R.id.wind:
-                Sound wind = new Sound("wind",Utill.WIND_IMG,Utill.WIND,50,true);
+                Sound wind = new Sound("wind",Utill.WIND_IMG,Utill.WIND,0.5f,true,0);
                 windIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(wind);
                 break;
             case R.id.river:
-                Sound river = new Sound("river",Utill.RIVER_IMG,Utill.RIVER,50,true);
+                Sound river = new Sound("river",Utill.RIVER_IMG,Utill.RIVER,0.5f,true,0);
                 riverIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(river);
                 break;
             case R.id.fire:
-                Sound fire = new Sound("fire",Utill.FIRE_IMG,Utill.FIRE,50,true);
+                Sound fire = new Sound("fire",Utill.FIRE_IMG,Utill.FIRE,0.5f,true,0);
                 fireIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(fire);
                 break;
             case R.id.forest:
-                Sound forest = new Sound("forest",Utill.FOREST_IMG,Utill.FOREST,50,true);
+                Sound forest = new Sound("forest",Utill.FOREST_IMG,Utill.FOREST,0.5f,true,0);
                 forestIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(forest);
                 break;
             case R.id.night:
-                Sound night = new Sound("night",Utill.NIGHT_IMG,Utill.NIGHT,50,true);
+                Sound night = new Sound("night",Utill.NIGHT_IMG,Utill.NIGHT,0.5f,true,0);
                 nightIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(night);
                 break;
         }
     }
-
     @Override
     public void update(String name, boolean enable) {
         int indicator = (enable) ? R.drawable.ic_feather_pause_circle : R.drawable.ic_outline_play_circle_filled_white;
@@ -199,7 +202,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
                 riverIndicator.setImageResource(indicator);
                 break;
             case "fire":
-                fire.setImageResource(indicator);
+                fireIndicator.setImageResource(indicator);
                 break;
             case "forest":
                 forestIndicator.setImageResource(indicator);
@@ -210,7 +213,34 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
         }
     }
 
-    private void playMusic(){
-        Listener.play("sound");
+
+    // ------------------------- Добавление и изменение песен --------------------------
+
+    @Override
+    public void addSound(Sound _sound) {
+        mManager.getSoundListiner().addSound(_sound);
     }
+
+    @Override
+    public void playSound(Sound _sound) {
+        mManager.getSoundListiner().playSound(_sound);
+    }
+
+    @Override
+    public void stopSound(Sound _sound) {
+        mManager.getSoundListiner().stopSound(_sound);
+    }
+
+    @Override
+    public void deleteSound(Sound _sound) {
+        mManager.getSoundListiner().deleteSound(_sound);
+    }
+
+    @Override
+    public void changeVolume(Sound _sound) {
+        mManager.getSoundListiner().changeVolume(_sound);
+    }
+
+    // ---------------------------------------------------------------------------------
+
 }

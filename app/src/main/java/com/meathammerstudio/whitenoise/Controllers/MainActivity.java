@@ -5,24 +5,49 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Menu;
 
+import com.meathammerstudio.whitenoise.Models.Sound;
+import com.meathammerstudio.whitenoise.Models.SoundListiner;
 import com.meathammerstudio.whitenoise.R;
+import com.meathammerstudio.whitenoise.Utills.Manager;
 import com.meathammerstudio.whitenoise.Utills.Utill;
 import com.meathammerstudio.whitenoise.Services.musicServices;
 
-public class MainActivity extends AppCompatActivity implements PlayMusicFragment.playsound{
+public class MainActivity extends AppCompatActivity{
+
+    private Manager mManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mManager = Manager.getInstance();
+        mManager.getSoundListiner().setContext(getApplicationContext());
+
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+
+        mManager.setHeight(height);
+        mManager.setWidth(width);
+
+
         Toolbar mActionBarToolbar =  findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mActionBarToolbar);
 
         addFragment(Utill.MUSIC_FRAGMENT);
+
+
+        Intent sound = new Intent(getApplicationContext(), musicServices.class );
+        startService(sound);
 
     }
 
@@ -39,17 +64,9 @@ public class MainActivity extends AppCompatActivity implements PlayMusicFragment
 
                 PlayMusicFragment playMusicFragment = new PlayMusicFragment();
                 fragmentTransaction.replace(R.id.container,playMusicFragment);
-                fragmentTransaction.addToBackStack("music");
                 break;
         }
         fragmentTransaction.commit();
     }
 
-
-    @Override
-    public void play(String name) {
-        Intent sound = new Intent(getApplicationContext(), musicServices.class );
-        sound.putExtra("name",name);
-        startService(sound);
-    }
 }

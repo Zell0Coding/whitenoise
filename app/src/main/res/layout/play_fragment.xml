@@ -12,13 +12,13 @@
 
 
     <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/grid_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:rowCount="3"
         app:columnCount="3"
         app:alignmentMode="alignMargins"
         app:columnOrderPreserved="false"
-        android:layout_weight="4"
         android:padding="14dp">
 
         <!-- ROW 1 -->
@@ -383,8 +383,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5">
+        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/play_recycler"

@@ -2,15 +2,14 @@ package com.meathammerstudio.whitenoise.Services;
 
 import android.app.Service;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.IBinder;
 
-import com.meathammerstudio.whitenoise.R;
+import com.meathammerstudio.whitenoise.Utills.Manager;
 
 public class musicServices extends Service {
 
     private static final String MUSIC = null;
-    MediaPlayer player;
+    private Manager mManager;
 
     public IBinder onBind(Intent arg0) {
 
@@ -20,13 +19,11 @@ public class musicServices extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        player = MediaPlayer.create(this, R.raw.fire);
-        player.setLooping(true); // Set looping
-        player.setVolume(100,100);
 
     }
     public int onStartCommand(Intent intent, int flags, int startId) {
-        player.start();
+
+        mManager = Manager.getInstance();
         return musicServices.START_STICKY;
     }
 
@@ -44,8 +41,7 @@ public class musicServices extends Service {
     }
     @Override
     public void onDestroy() {
-        player.stop();
-        player.release();
+
     }
 
     @Override

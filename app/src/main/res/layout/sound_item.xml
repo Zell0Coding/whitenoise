@@ -50,11 +50,27 @@
         android:paddingRight="80dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/sound_delete"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/sound_image_container"
         app:layout_constraintTop_toTopOf="parent">
 
     </androidx.appcompat.widget.AppCompatSeekBar>
+
+    <ImageButton
+        android:id="@+id/sound_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/delete"
+        android:layout_marginRight="14dp"
+        android:layout_marginEnd="14dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/sound_volume"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ImageButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
