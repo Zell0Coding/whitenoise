@@ -141,6 +141,7 @@ public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         for(int i = 0; i < sounds.size();i++){
             if(sounds.get(i)!=null){
                 sounds.get(i).setEnabled(false);
+                update.update(sounds.get(i).getName(),false);
             }
         }
         notifyDataSetChanged();
@@ -151,6 +152,7 @@ public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             if(sounds.get(i)!=null){
                 sounds.get(i).setEnabled(true);
+                update.update(sounds.get(i).getName(),true);
             }
         }
         notifyDataSetChanged();
@@ -177,6 +179,15 @@ public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         sounds.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, sounds.size());
+    }
+
+    public boolean getItem(Sound sound){
+        for(int i = 1; i < sounds.size();i++){
+            if(sounds.get(i).getName().equals(sound.getName())){
+                return true;
+            }
+        }
+        return false;
     }
 
     private Sound getItem(int position){
