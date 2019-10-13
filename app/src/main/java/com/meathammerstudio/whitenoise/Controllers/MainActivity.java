@@ -34,9 +34,6 @@ public class MainActivity extends AppCompatActivity{
         Point size = new Point();
         display.getSize(size);
         int width = size.x;
-        int height = size.y;
-
-        mManager.setHeight(height);
         mManager.setWidth(width);
 
 

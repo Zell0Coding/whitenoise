@@ -6,17 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#14192D"
-    tools:context=".Controllers.MainActivity">
+    tools:context=".Controllers.MainActivity"
+    android:id="@+id/container">
 
     <include layout="@layout/toolbar" />
 
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </androidx.core.widget.NestedScrollView>
 
 
 </LinearLayout>

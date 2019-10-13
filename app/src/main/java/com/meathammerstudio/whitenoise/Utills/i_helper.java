@@ -9,7 +9,7 @@ import com.meathammerstudio.whitenoise.Models.Sound;
 public interface i_helper {
 
     interface i_sound{
-        void addSound(Sound _sound);
+        void addSound(Sound _sound, boolean re_create);
         void playSound(Sound _sound);
         void stopSound(Sound _sound);
         void deleteSound(Sound _sound);

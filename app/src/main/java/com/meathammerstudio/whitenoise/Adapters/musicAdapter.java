@@ -73,8 +73,10 @@ public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             final SoundView view = (SoundView)holder;
             final int _pos = position;
 
+            int vol = (int)(sound.getVolume()*100);
+
             view.sound_picture.setImageResource(sound.getPath_img());
-            view.volume.setProgress(50);
+            view.volume.setProgress(vol);
 
             if(sound.isEnabled()){
                 view.sound_enable.setImageResource(R.drawable.ic_feather_pause_circle);
@@ -131,6 +133,29 @@ public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     }
 
+    public List<Sound> getItems(){
+        return sounds;
+    }
+
+    public void allStop(){
+        for(int i = 0; i < sounds.size();i++){
+            if(sounds.get(i)!=null){
+                sounds.get(i).setEnabled(false);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void allPlay(){
+        for(int i = 0; i < sounds.size();i++){
+
+            if(sounds.get(i)!=null){
+                sounds.get(i).setEnabled(true);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return sounds.size();
@@ -157,14 +182,14 @@ public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Sound getItem(int position){
         return sounds.get(position);
     }
-    public void addNewSong(Sound _sound){
+    public void addNewSong(Sound _sound, boolean reCreate){
         for(int i = 1; i < sounds.size();i++){
             if(sounds.get(i).getName().equals(_sound.getName())){
                 return;
             }
         }
         sounds.add(_sound);
-        sound_helper.addSound(_sound);
+        sound_helper.addSound(_sound, reCreate);
         notifyItemChanged(sounds.size()-1);
     }
 

@@ -19,12 +19,14 @@ public class SoundListiner  {
     public void setContext(Context context){mContext = context;}
     public void addSound( Sound _sound){
 
-        MediaPlayer sound = MediaPlayer.create(mContext, _sound.getPath_sound());
-        sound.setLooping(true); // Set looping
-        sound.setVolume(_sound.getVolume(),_sound.getVolume());
-        soundListiner.put(_sound,sound);
-        Log.d("TAG","add");
-        if(_sound.isEnabled()) sound.start();
+        if(_sound!=null){
+            MediaPlayer sound = MediaPlayer.create(mContext, _sound.getPath_sound());
+            sound.setLooping(true); // Set looping
+            sound.setVolume(_sound.getVolume(),_sound.getVolume());
+            soundListiner.put(_sound,sound);
+            Log.d("TAG","add");
+            if(_sound.isEnabled()) sound.start();
+        }
     }
     public void deleteSound(Sound _sound){
         for (Map.Entry<Sound,MediaPlayer> map:soundListiner.entrySet())
@@ -59,6 +61,20 @@ public class SoundListiner  {
                 map.getKey().setEnabled(false);
                 return;
             }
+        }
+    }
+    public void stopAllSound(){
+        for (Map.Entry<Sound,MediaPlayer> map: soundListiner.entrySet()) {
+            map.getKey().setSound_sec(map.getValue().getCurrentPosition());
+            map.getValue().stop();
+            map.getValue().prepareAsync();
+            map.getKey().setEnabled(false);
+        }
+    }
+    public void playAllSound(){
+        for (Map.Entry<Sound,MediaPlayer> map: soundListiner.entrySet()) {
+            map.getValue().seekTo(map.getKey().getSound_sec());
+            map.getValue().start();
         }
     }
     public void changeVolume(Sound _sound){

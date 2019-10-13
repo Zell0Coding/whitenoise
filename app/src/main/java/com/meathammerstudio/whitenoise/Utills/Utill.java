@@ -33,4 +33,9 @@ public abstract class Utill {
     public static final int NIGHT_IMG = R.drawable.night;
     // -------------------------------------------------------
 
+    // --------------------- ФАЙЛЫ ---------------------------
+    public static final String SELECTED_SOUND = "selected_sound";
+
+    // -------------------------------------------------------
+
 }

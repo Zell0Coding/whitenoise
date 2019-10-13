@@ -1,6 +1,9 @@
 package com.meathammerstudio.whitenoise.Models;
 
+import java.io.Serializable;
+
 public class Sound {
+
 
     private String name;
     private int path_img;

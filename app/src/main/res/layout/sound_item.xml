@@ -48,6 +48,11 @@
         android:paddingLeft="40dp"
         android:paddingEnd="40dp"
         android:paddingRight="80dp"
+        android:maxHeight="2dp"
+        android:minHeight="2dp"
+
+        android:progressDrawable="@drawable/seec_style"
+        android:thumb="@drawable/thumb"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/sound_delete"

@@ -3,6 +3,7 @@ package com.meathammerstudio.whitenoise.Controllers;
 import android.content.Context;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +19,19 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.meathammerstudio.whitenoise.Adapters.SwipeToDeleteCallback;
 import com.meathammerstudio.whitenoise.Adapters.musicAdapter;
 import com.meathammerstudio.whitenoise.Models.Sound;
+import com.meathammerstudio.whitenoise.Models.SoundContainer;
 import com.meathammerstudio.whitenoise.R;
 import com.meathammerstudio.whitenoise.Utills.Manager;
+import com.meathammerstudio.whitenoise.Utills.StorageManager;
 import com.meathammerstudio.whitenoise.Utills.Utill;
 import com.meathammerstudio.whitenoise.Utills.i_helper;
+
+import java.util.List;
 
 public class PlayMusicFragment extends Fragment implements View.OnClickListener,  musicAdapter.updateButton, i_helper.i_sound  {
 
@@ -46,6 +53,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     private ImageButton fire;
     private ImageButton forest;
     private ImageButton night;
+    private ImageButton allPlay;
 
     private ImageView whiteNoiseIndicator;
     private ImageView rainIndicator;
@@ -78,6 +86,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
         forestIndicator = view.findViewById(R.id.forest_indicator);
         nightIndicator = view.findViewById(R.id.night_indicator);
         mGridLayout = view.findViewById(R.id.grid_layout);
+        allPlay = view.findViewById(R.id.play_all);
 
         whiteNoise = view.findViewById(R.id.white_noise);
         rain = view.findViewById(R.id.rain);
@@ -99,6 +108,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
         fire.setOnClickListener(this);
         forest.setOnClickListener(this);
         night.setOnClickListener(this);
+        allPlay.setOnClickListener(this);
 
 
         mGridLayout.setMinimumHeight(mManager.getWidth()-96-28);
@@ -126,6 +136,20 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
 
          */
 
+        reCreateSounds();
+
+    }
+
+    private void reCreateSounds(){
+        SoundContainer soundContainer = loadSound();
+        if(soundContainer!=null){
+            for(int i = 1; i < soundContainer.mSoundList.size();i++){
+                mMusicAdapter.addNewSong(soundContainer.mSoundList.get(i),true);
+                update(soundContainer.mSoundList.get(i).getName(),soundContainer.mSoundList.get(i).isEnabled());
+                if(soundContainer.mSoundList.get(i).isEnabled()) allPlay.setImageResource(R.drawable.all_pause);
+
+            }
+        }
     }
 
 
@@ -135,47 +159,70 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
             case R.id.white_noise:
                 Sound white_sound = new Sound("white_noise",Utill.WHITE_NOISE_IMG,Utill.WHITE_NOISE,0.5f,true,0);
                 whiteNoiseIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
-                mMusicAdapter.addNewSong(white_sound);
+                mMusicAdapter.addNewSong(white_sound,false);
                 break;
             case R.id.rain:
                 Sound rain = new Sound("rain",Utill.RAIN_IMG,Utill.RAIN,0.5f,true,0);
                 rainIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
-                mMusicAdapter.addNewSong(rain);
+                mMusicAdapter.addNewSong(rain,false);
                 break;
             case R.id.thunder:
                 Sound thunder = new Sound("thunder",Utill.THUNDER_IMG,Utill.THUNDER,0.5f,true,0);
                 thunderIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
-                mMusicAdapter.addNewSong(thunder);
+                mMusicAdapter.addNewSong(thunder,false);
                 break;
             case R.id.ocean:
                 Sound ocean = new Sound("ocean",Utill.OCEAN_IMG,Utill.OCEAN,0.5f,true,0);
                 oceanIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
-                mMusicAdapter.addNewSong(ocean);
+                mMusicAdapter.addNewSong(ocean,false);
                 break;
             case R.id.wind:
                 Sound wind = new Sound("wind",Utill.WIND_IMG,Utill.WIND,0.5f,true,0);
                 windIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
-                mMusicAdapter.addNewSong(wind);
+                mMusicAdapter.addNewSong(wind,false);
                 break;
             case R.id.river:
                 Sound river = new Sound("river",Utill.RIVER_IMG,Utill.RIVER,0.5f,true,0);
                 riverIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
-                mMusicAdapter.addNewSong(river);
+                mMusicAdapter.addNewSong(river,false);
                 break;
             case R.id.fire:
                 Sound fire = new Sound("fire",Utill.FIRE_IMG,Utill.FIRE,0.5f,true,0);
                 fireIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
-                mMusicAdapter.addNewSong(fire);
+                mMusicAdapter.addNewSong(fire,false);
                 break;
             case R.id.forest:
                 Sound forest = new Sound("forest",Utill.FOREST_IMG,Utill.FOREST,0.5f,true,0);
                 forestIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
-                mMusicAdapter.addNewSong(forest);
+                mMusicAdapter.addNewSong(forest,false);
                 break;
             case R.id.night:
                 Sound night = new Sound("night",Utill.NIGHT_IMG,Utill.NIGHT,0.5f,true,0);
                 nightIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
-                mMusicAdapter.addNewSong(night);
+                mMusicAdapter.addNewSong(night,false);
+                break;
+            case R.id.play_all:
+
+                List<Sound> sounds = mMusicAdapter.getItems();
+                if(sounds!=null){
+                    for(int i = 1; i < sounds.size();i++){
+
+                        if(sounds.get(i)!=null){
+                            if(sounds.get(i).isEnabled()){
+                                mManager.getSoundListiner().stopAllSound();
+                                mMusicAdapter.allStop();
+                                allPlay.setImageResource(R.drawable.all_play);
+                                saveSound();
+                                return;
+                            }
+                        }
+                    }
+                    mManager.getSoundListiner().playAllSound();
+                    mMusicAdapter.allPlay();
+                    allPlay.setImageResource(R.drawable.all_pause);
+                    saveSound();
+                }
+
                 break;
         }
     }
@@ -210,37 +257,101 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
             case "night":
                 nightIndicator.setImageResource(indicator);
                 break;
+
         }
+    }
+
+    private void updateStateAllButtonIcon(){
+
+        List<Sound> sounds = mMusicAdapter.getItems();
+        if(sounds!=null){
+            for(int i = 1; i < sounds.size();i++){
+
+                if(sounds.get(i)!=null){
+                    if(sounds.get(i).isEnabled()){
+                        allPlay.setImageResource(R.drawable.all_pause);
+                        return;
+                    }
+                }
+            }
+            allPlay.setImageResource(R.drawable.all_play);
+        }
+
     }
 
 
     // ------------------------- Добавление и изменение песен --------------------------
 
     @Override
-    public void addSound(Sound _sound) {
+    public void addSound(Sound _sound, boolean re_create) {
+
         mManager.getSoundListiner().addSound(_sound);
+        if(re_create) return;
+
+        saveSound();
+
     }
 
     @Override
     public void playSound(Sound _sound) {
         mManager.getSoundListiner().playSound(_sound);
+        updateStateAllButtonIcon();
+        saveSound();
     }
 
     @Override
     public void stopSound(Sound _sound) {
         mManager.getSoundListiner().stopSound(_sound);
+        updateStateAllButtonIcon();
+        saveSound();
     }
 
     @Override
     public void deleteSound(Sound _sound) {
         mManager.getSoundListiner().deleteSound(_sound);
+        updateStateAllButtonIcon();
+        saveSound();
     }
 
     @Override
     public void changeVolume(Sound _sound) {
         mManager.getSoundListiner().changeVolume(_sound);
+        saveSound();
     }
 
     // ---------------------------------------------------------------------------------
 
+
+    // ----------------- SAVE SELECTED SOUND -----------------
+
+    private void saveSound(){
+        List<Sound> sounds = mMusicAdapter.getItems();
+        SoundContainer soundContainer = new SoundContainer();
+
+        for(int i = 0; i < sounds.size();i++){
+            soundContainer.addSound(sounds.get(i));
+        }
+
+        Gson gson = new Gson();
+        String json_data = gson.toJson(soundContainer);
+        StorageManager.writeToFile(Utill.SELECTED_SOUND,json_data,getContext());
+    }
+
+    // -------------------------------------------------------
+
+    private SoundContainer loadSound(){
+
+        try {
+            String data = StorageManager.readFromFile(Utill.SELECTED_SOUND, getContext());
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            Gson gson = gsonBuilder.create();
+            SoundContainer soundContainer = gson.fromJson(data,SoundContainer.class);
+            return soundContainer;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // -------------------------------------------------------
 }
