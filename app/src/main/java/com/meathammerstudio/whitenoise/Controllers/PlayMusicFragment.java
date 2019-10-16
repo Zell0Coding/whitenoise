@@ -285,7 +285,6 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
 
         mManager.getSoundListiner().addSound(_sound);
         if(re_create) return;
-
         saveSound();
 
     }

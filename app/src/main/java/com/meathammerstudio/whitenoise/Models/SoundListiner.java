@@ -20,11 +20,17 @@ public class SoundListiner  {
     public void addSound( Sound _sound){
 
         if(_sound!=null){
+            for (Map.Entry<Sound,MediaPlayer> entry: soundListiner.entrySet())
+            {
+              if(entry.getKey().getName().equals(_sound.getName())){
+                  return;
+              }
+            }
             MediaPlayer sound = MediaPlayer.create(mContext, _sound.getPath_sound());
             sound.setLooping(true); // Set looping
             sound.setVolume(_sound.getVolume(),_sound.getVolume());
             soundListiner.put(_sound,sound);
-            Log.d("TAG","add");
+            Log.d("SIZE",soundListiner.size()+"");
             if(_sound.isEnabled()) sound.start();
         }
     }
@@ -32,7 +38,7 @@ public class SoundListiner  {
         for (Map.Entry<Sound,MediaPlayer> map:soundListiner.entrySet())
         {
             if(map.getKey().getName().equals(_sound.getName())){
-                soundListiner.get(_sound).stop();
+                map.getValue().stop();
                 Log.d("TAG","stop");
                 soundListiner.remove(_sound);
                 return;
