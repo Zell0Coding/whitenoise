@@ -4,5 +4,6 @@
     <color name="colorPrimary">#14192D</color>
     <color name="colorText">#E2E6E7</color>
     <color name="colorSelected">#C06AFF</color>
+    <color name="switch_disable">#E5E5E5</color>
     
 </resources>

@@ -126,18 +126,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        /*
-
-        /ItemTouchHelper.Callback callback = new SwipeToDeleteCallback(mMusicAdapter);
-                mItemTouchHelper = new ItemTouchHelper(callback);
-        mItemTouchHelper.attachToRecyclerView(mRecyclerView);
-
-
-         */
-
         reCreateSounds();
-
     }
 
     private void reCreateSounds(){

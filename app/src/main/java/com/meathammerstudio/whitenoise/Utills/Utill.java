@@ -4,9 +4,10 @@ import com.meathammerstudio.whitenoise.R;
 
 public abstract class Utill {
 
-    public static final String MUSIC_FRAGMENT = "play_music";
-    public static final String TIMER_FRAGMENT = "timer";
+    public static final String MUSIC_FRAGMENT = "PlayMusicFragment";
+    public static final String TIMER_FRAGMENT = "TimerFragment";
     public static final String SETTINGS = "settings";
+    public static final String SLEEP_MODE = "sleep";
 
 
     // ---------------------  ЗВУКИ --------------------------
