@@ -10,6 +10,9 @@ public class Manager {
     private int width;
     private int height;
 
+    private int current_timer_hour;
+    private int current_timer_minute;
+
     private Manager(){mSoundListiner = new SoundListiner();}
 
     public static Manager getInstance(){ // #3
@@ -31,4 +34,16 @@ public class Manager {
         this.width = width;
     }
 
+    public int getCurrent_timer_hour() {
+        return current_timer_hour;
+    }
+    public void setCurrent_timer_hour(int current_timer_hour) {
+        this.current_timer_hour = current_timer_hour;
+    }
+    public int getCurrent_timer_minute() {
+        return current_timer_minute;
+    }
+    public void setCurrent_timer_minute(int current_timer_minute) {
+        this.current_timer_minute = current_timer_minute;
+    }
 }

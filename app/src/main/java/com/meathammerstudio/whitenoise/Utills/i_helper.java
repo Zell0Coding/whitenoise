@@ -1,10 +1,7 @@
 package com.meathammerstudio.whitenoise.Utills;
-
-import android.view.View;
-
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.meathammerstudio.whitenoise.Models.Sound;
+import com.meathammerstudio.whitenoise.Models.Timer;
+import java.util.List;
 
 public interface i_helper {
 
@@ -14,6 +11,12 @@ public interface i_helper {
         void stopSound(Sound _sound);
         void deleteSound(Sound _sound);
         void changeVolume(Sound _sound);
+    }
+
+    interface i_timer{
+        void updateTimer(List<Timer> _timers);
+        void enableTimer(Timer timer);
+        void disableTimer();
     }
 
 }

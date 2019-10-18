@@ -3,6 +3,7 @@ package com.meathammerstudio.whitenoise.Services;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.meathammerstudio.whitenoise.Utills.Manager;
 
@@ -41,7 +42,8 @@ public class musicServices extends Service {
     }
     @Override
     public void onDestroy() {
-
+        Log.d("Остановки сервиса песен","STOP");
+        super.onDestroy();
     }
 
     @Override

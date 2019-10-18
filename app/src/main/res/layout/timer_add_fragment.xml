@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TimePicker
+        android:id="@+id/timer_picker"
+        android:theme="@style/MyThemeTimePicker"
+        style="@style/MyThemeTimePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:numbersSelectorColor="@color/colorSelected"
+        android:timePickerMode="spinner">
+
+    </TimePicker>
+
+    <ImageButton
+        android:id="@+id/add_new_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/all_play"
+        android:background="@drawable/button_play_circle"
+        android:layout_gravity="center_horizontal">
+
+    </ImageButton>
+
+</LinearLayout>

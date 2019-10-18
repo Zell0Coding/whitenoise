@@ -36,7 +36,7 @@ public abstract class Utill {
 
     // --------------------- ФАЙЛЫ ---------------------------
     public static final String SELECTED_SOUND = "selected_sound";
-
+    public static final String TIMER_SELECTED = "selected_timers";
     // -------------------------------------------------------
 
 }

@@ -6,7 +6,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:timePickerStyle">@style/MyThemeTimePicker</item>
     </style>
 
-
+    <style name="MyThemeTimePicker" parent="@android:style/Widget.Material.TimePicker">
+        <item name="android:textColorPrimary">@color/colorSelected</item>
+        <item name="android:textColorSecondary">@color/switch_disable</item>
+        <item name="android:colorControlNormal">@android:color/transparent</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+    
 </resources>

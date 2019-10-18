@@ -15,18 +15,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.meathammerstudio.whitenoise.Models.Timer;
 import com.meathammerstudio.whitenoise.R;
 import com.meathammerstudio.whitenoise.Utills.ItemTouchHelperAdapter;
+import com.meathammerstudio.whitenoise.Utills.i_helper;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class timerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter {
+public class timerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter    {
 
+    private i_helper.i_timer mI_timer;
     private Context mContext;
     private List<Timer> timers;
 
-    public timerAdapter(Context _context){
+    public timerAdapter(Context _context, i_helper.i_timer _interface){
         mContext = _context;
+        mI_timer = _interface;
         timers = new ArrayList<>();
     }
 
@@ -44,7 +47,11 @@ public class timerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         final item Item = (item)holder;
 
-        Item.time.setText(timers.get(position).getTime());
+        String hours = (timers.get(position).getHours()<10) ? "0"+timers.get(position).getHours() : ""+timers.get(position).getHours();
+        String minutes = (timers.get(position).getMinute()<10) ? "0"+timers.get(position).getMinute() : ""+timers.get(position).getMinute();
+
+        String timer_label =hours+":" + minutes;
+        Item.time.setText(timer_label);
 
         if(timers.get(position).isEnable()){
             Item.mSwitchCompat.setChecked(true);
@@ -89,6 +96,8 @@ public class timerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onItemDismiss(int position) {
 
         timers.remove(position);
+        mI_timer.updateTimer(timers);
+        mI_timer.disableTimer();
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, timers.size());
     }
@@ -108,7 +117,12 @@ public class timerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 }
             }
         }
+        mI_timer.updateTimer(timers);
+        mI_timer.disableTimer();
+        if(isEnable) mI_timer.enableTimer(timers.get(position));
     }
+
+
 
     class item extends RecyclerView.ViewHolder{
 
