@@ -8,10 +8,10 @@ public class Manager {
     private SoundListiner mSoundListiner;
 
     private int width;
-    private int height;
 
     private int current_timer_hour;
     private int current_timer_minute;
+    private String currentLang;
 
     private Manager(){mSoundListiner = new SoundListiner();}
 
@@ -22,6 +22,13 @@ public class Manager {
         return instance;		// вернуть ранее созданный объект
     }
 
+    public String getCurrentLang() {
+        return currentLang;
+    }
+
+    public void setCurrentLang(String currentLang) {
+        this.currentLang = currentLang;
+    }
 
     public SoundListiner getSoundListiner() {
         return mSoundListiner;

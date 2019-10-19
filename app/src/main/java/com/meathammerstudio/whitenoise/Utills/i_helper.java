@@ -1,6 +1,8 @@
 package com.meathammerstudio.whitenoise.Utills;
+import com.meathammerstudio.whitenoise.Models.Languages;
 import com.meathammerstudio.whitenoise.Models.Sound;
 import com.meathammerstudio.whitenoise.Models.Timer;
+
 import java.util.List;
 
 public interface i_helper {
@@ -17,6 +19,10 @@ public interface i_helper {
         void updateTimer(List<Timer> _timers);
         void enableTimer(Timer timer);
         void disableTimer();
+    }
+
+    interface i_language{
+        void selectLanguage(Languages.language language);
     }
 
 }

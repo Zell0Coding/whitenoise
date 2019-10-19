@@ -6,20 +6,31 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.meathammerstudio.whitenoise.Models.Sound;
+import com.meathammerstudio.whitenoise.Models.SoundContainer;
 import com.meathammerstudio.whitenoise.Models.SoundListiner;
+import com.meathammerstudio.whitenoise.Models.currentLanguage;
 import com.meathammerstudio.whitenoise.R;
 import com.meathammerstudio.whitenoise.Utills.Manager;
+import com.meathammerstudio.whitenoise.Utills.StorageManager;
 import com.meathammerstudio.whitenoise.Utills.Utill;
 import com.meathammerstudio.whitenoise.Services.musicServices;
 
-public class MainActivity extends AppCompatActivity{
+import java.util.Locale;
+
+public class MainActivity extends AppCompatActivity implements LanguageFragment.selectLanguage{
 
     private Manager mManager;
     private ActionBar mActionBar;
@@ -51,6 +62,8 @@ public class MainActivity extends AppCompatActivity{
         fragmentTransaction.replace(R.id.container,playMusicFragment);
         fragmentTransaction.commit();
 
+        setSettings();
+
         Intent sound = new Intent(getApplicationContext(), musicServices.class );
         startService(sound);
 
@@ -74,7 +87,7 @@ public class MainActivity extends AppCompatActivity{
                 //
                 break;
             case R.id.settings:
-                //
+                addFragment(Utill.SETTINGS);
                 break;
             case android.R.id.home:
                 addFragment(Utill.MUSIC_FRAGMENT);
@@ -105,8 +118,65 @@ public class MainActivity extends AppCompatActivity{
                 mActionBar.setTitle(R.string.timer);
 
                 break;
+            case Utill.SETTINGS:
+
+                LanguageFragment languageFragment = new LanguageFragment();
+                fragmentTransaction.replace(R.id.container,languageFragment);
+                mActionBar.setDisplayHomeAsUpEnabled(true);
+                mActionBar.setDisplayShowHomeEnabled(true);
+                mActionBar.setDisplayShowTitleEnabled(true);
+                mActionBar.setTitle(R.string.settings);
+
+                break;
         }
         fragmentTransaction.commit();
+    }
+
+    private void setSettings(){
+
+        Resources resources = getResources();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        Configuration configuration = resources.getConfiguration();
+
+        currentLanguage language = getLanguage();
+
+
+        if(language==null){
+            language = new currentLanguage();
+            language.setLanguage_abbr(configuration.locale.getLanguage().toLowerCase());
+            Gson gson = new Gson();
+            String json_data = gson.toJson(language);
+            StorageManager.writeToFile(Utill.SETTINGS,json_data,getApplicationContext());
+
+        }else{
+
+            try {
+                configuration.setLocale(new Locale(language.getLanguage_abbr().toLowerCase()));
+            }catch (RuntimeException e){
+                configuration.locale = new Locale(language.getLanguage_abbr().toLowerCase());
+            }
+            resources.updateConfiguration(configuration,displayMetrics);
+
+        }
+        mManager.setCurrentLang(language.getLanguage_abbr().toLowerCase());
+    }
+
+    private currentLanguage getLanguage(){
+        try {
+            String data = StorageManager.readFromFile(Utill.SETTINGS, getApplicationContext());
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            Gson gson = gsonBuilder.create();
+            currentLanguage language = gson.fromJson(data,currentLanguage.class);
+            return language;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public void select() {
+        mActionBar.setTitle(R.string.timer);
     }
 
     @Override
