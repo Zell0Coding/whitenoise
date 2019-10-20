@@ -33,6 +33,10 @@
             android:enabled="true">
 
         </service>
+
+        <receiver android:name=".Services.AlertReceiver">
+
+        </receiver>
     </application>
 
 </manifest>

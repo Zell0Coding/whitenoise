@@ -1,5 +1,8 @@
 package com.meathammerstudio.whitenoise.Controllers;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,11 +22,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.meathammerstudio.whitenoise.Models.sleepModel;
 import com.meathammerstudio.whitenoise.R;
+import com.meathammerstudio.whitenoise.Services.AlertReceiver;
 import com.meathammerstudio.whitenoise.Utills.Manager;
+import com.meathammerstudio.whitenoise.Utills.NotificationHelper;
 import com.meathammerstudio.whitenoise.Utills.StorageManager;
 import com.meathammerstudio.whitenoise.Utills.Utill;
 
+import java.util.Calendar;
 import java.util.List;
+
+import static android.content.Context.ALARM_SERVICE;
 
 public class AsleepFragment extends Fragment implements View.OnClickListener {
 
@@ -116,6 +124,7 @@ public class AsleepFragment extends Fragment implements View.OnClickListener {
             mSwitchCompat.setThumbResource(R.drawable.switch_disable_thumb);
             mSwitchCompat.setTrackResource(R.drawable.switch_disable);
             mSwitchCompat.setChecked(false);
+            cancelAlarm();
         }
     }
     private void defaultButton(){
@@ -226,6 +235,68 @@ public class AsleepFragment extends Fragment implements View.OnClickListener {
         Gson gson = new Gson();
         String json_data = gson.toJson(mSleepModel);
         StorageManager.writeToFile(Utill.ASLEEP,json_data,getContext());
+        if(mSleepModel.isEnable() && canSave)createNotification();
+    }
+
+
+    private void createNotification (){
+        cancelAlarm(); // удаляем прошлый аларм
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(getContext(), AlertReceiver.class);
+        /*  Создаем время и дни для уведомления  */
+        for(int i = 0; i < mSleepModel.getDays().size(); i++){
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY , mSleepModel.getSleepingHour());
+            calendar.set(Calendar.MINUTE , mSleepModel.getSleepingMinute());
+            calendar.set(Calendar.SECOND ,0);
+
+            switch (mSleepModel.getDays().get(i)){
+                case "Mo":
+                    calendar.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+                    Log.d("ALARM", mSleepModel.getDays().get(i));
+                    break;
+                case "Tu":
+                    calendar.set(Calendar.DAY_OF_WEEK,Calendar.TUESDAY);
+                    break;
+                case "We":
+                    calendar.set(Calendar.DAY_OF_WEEK,Calendar.WEDNESDAY);
+                    break;
+                case "Th":
+                    calendar.set(Calendar.DAY_OF_WEEK,Calendar.THURSDAY);
+                    break;
+                case "Fr":
+                    calendar.set(Calendar.DAY_OF_WEEK,Calendar.FRIDAY);
+                    break;
+                case "Sa":
+                    calendar.set(Calendar.DAY_OF_WEEK,Calendar.SATURDAY);
+                    break;
+                case "Su":
+                    calendar.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);
+                    break;
+            }
+            // ----------------------------------------
+
+            if (calendar.before(Calendar.getInstance())) {
+                calendar.add(Calendar.DATE, 7);
+            }
+
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), i, intent, PendingIntent.FLAG_ONE_SHOT);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),7 * 24 * 3600 * 1000, pendingIntent);
+            Log.d("ALARM","Alarm Created for day" + (calendar.getTime().toString()));
+        }
+
+    }
+
+    private void cancelAlarm() {
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(getContext(), AlertReceiver.class);
+        for(int i = 0; i < 7; i ++){
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), i, intent, PendingIntent.FLAG_ONE_SHOT);
+            alarmManager.cancel(pendingIntent);
+        }
+
+        Log.d("ALARM","Alarm canceled");
     }
 }
 

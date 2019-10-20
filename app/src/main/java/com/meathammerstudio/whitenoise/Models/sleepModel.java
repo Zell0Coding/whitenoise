@@ -1,7 +1,6 @@
 package com.meathammerstudio.whitenoise.Models;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class sleepModel {
@@ -14,8 +13,8 @@ public class sleepModel {
     public sleepModel(){
         isEnable = false;
         days = new ArrayList<>();
-        //sleepingHour = Calendar.getInstance().get(Calendar.HOUR);
-        //sleepingMinute = Calendar.getInstance().get(Calendar.MINUTE);
+        sleepingHour = 21;
+        sleepingMinute = 0;
     }
 
     public boolean isEnable() {
