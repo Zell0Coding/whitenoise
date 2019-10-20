@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
                 addFragment(Utill.TIMER_FRAGMENT);
                 break;
             case R.id.sleep:
-                //
+                addFragment(Utill.SLEEP_MODE);
                 break;
             case R.id.settings:
                 addFragment(Utill.SETTINGS);
@@ -128,6 +128,17 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
                 mActionBar.setTitle(R.string.settings);
 
                 break;
+
+            case Utill.SLEEP_MODE:
+
+                AsleepFragment asleepFragment = new AsleepFragment();
+                fragmentTransaction.replace(R.id.container,asleepFragment);
+                mActionBar.setDisplayHomeAsUpEnabled(true);
+                mActionBar.setDisplayShowHomeEnabled(true);
+                mActionBar.setDisplayShowTitleEnabled(true);
+                mActionBar.setTitle(R.string.sleeping_mode);
+
+                break;
         }
         fragmentTransaction.commit();
     }
@@ -163,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
 
     private currentLanguage getLanguage(){
         try {
-            String data = StorageManager.readFromFile(Utill.SETTINGS, getApplicationContext());
+            String data = StorageManager.readFromFile(Utill.LANGUAGE, getApplicationContext());
             GsonBuilder gsonBuilder = new GsonBuilder();
             Gson gson = gsonBuilder.create();
             currentLanguage language = gson.fromJson(data,currentLanguage.class);

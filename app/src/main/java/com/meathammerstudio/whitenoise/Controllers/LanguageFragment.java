@@ -86,7 +86,7 @@ public class LanguageFragment extends Fragment implements i_helper.i_language {
         language_.setLanguage_abbr(language.getAbbr().toLowerCase());
         Gson gson = new Gson();
         String json_data = gson.toJson(language_);
-        StorageManager.writeToFile(Utill.SETTINGS,json_data,getContext());
+        StorageManager.writeToFile(Utill.LANGUAGE,json_data,getContext());
         mManager.setCurrentLang(language_.getLanguage_abbr());
 
         Resources resources = getResources();

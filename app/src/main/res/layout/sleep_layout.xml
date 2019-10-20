@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/asleep"
+                android:textColor="@color/colorText"
+                android:textSize="15sp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="36dp"
+                android:layout_marginStart="36dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </TextView>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/asleep_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="17dp"
+                android:layout_marginEnd="17dp"
+                app:thumbTint="@color/colorSelected"
+                app:track="@drawable/switch_track"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="15sp"
+            android:textColor="@color/colorText"
+            android:text="@string/timing"
+            android:textAlignment="center">
+
+        </TextView>
+        <TimePicker
+            android:id="@+id/timer_picker"
+            android:theme="@style/MyThemeTimePicker"
+            style="@style/MyThemeTimePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:numbersSelectorColor="@color/colorSelected"
+            android:timePickerMode="spinner">
+
+        </TimePicker>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="15sp"
+            android:textColor="@color/colorText"
+            android:text="@string/days_of_week"
+            android:textAlignment="center">
+
+        </TextView>
+
+        <LinearLayout
+            android:id="@+id/buttons_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/day_monday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="7dp"
+                android:text="Пн"
+                android:textAllCaps="false"
+                style="@style/DayButtonNonInclude"
+                android:layout_weight="1">
+
+            </Button>
+            <Button
+                android:id="@+id/day_tuesday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="7dp"
+                android:layout_marginLeft="7dp"
+                android:text="Вт"
+                android:textAllCaps="false"
+                style="@style/DayButtonNonInclude"
+                android:layout_weight="1">
+
+            </Button>
+            <Button
+                android:id="@+id/day_wednesday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="7dp"
+                android:layout_marginLeft="7dp"
+                style="@style/DayButtonNonInclude"
+                android:text="Ср"
+                android:textAllCaps="false"
+                android:layout_weight="1">
+
+            </Button>
+            <Button
+                android:id="@+id/day_thursday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="7dp"
+                android:layout_marginLeft="7dp"
+                style="@style/DayButtonNonInclude"
+                android:text="Чт"
+                android:textAllCaps="false"
+                android:layout_weight="1">
+
+            </Button>
+            <Button
+                android:id="@+id/day_friday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="7dp"
+                android:layout_marginLeft="7dp"
+                style="@style/DayButtonNonInclude"
+                android:text="Пт"
+                android:textAllCaps="false"
+                android:layout_weight="1">
+
+            </Button>
+            <Button
+                android:id="@+id/day_saturday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="7dp"
+                android:layout_marginLeft="7dp"
+                style="@style/DayButtonNonInclude"
+                android:text="Сб"
+                android:textAllCaps="false"
+                android:layout_weight="1">
+
+            </Button>
+            <Button
+                android:id="@+id/day_sunday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginEnd="15dp"
+                style="@style/DayButtonNonInclude"
+                android:text="Вс"
+                android:textAllCaps="false"
+                android:layout_weight="1">
+
+            </Button>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -49,6 +49,7 @@ public abstract class Utill {
     public static final String SELECTED_SOUND = "selected_sound";
     public static final String TIMER_SELECTED = "selected_timers";
     public static final String LANGUAGE = "language";
+    public static final String ASLEEP = "asleep";
     // -------------------------------------------------------
 
 }

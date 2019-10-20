@@ -59,7 +59,7 @@ public class TimerAddFragment extends Fragment {
     }
 
     private void saveTimer(){
-            int hours = mTimePicker.getCurrentHour();
+        int hours = mTimePicker.getCurrentHour();
         int minutes = mTimePicker.getCurrentMinute();
         Timer timer = new Timer(hours,minutes,false);
 
