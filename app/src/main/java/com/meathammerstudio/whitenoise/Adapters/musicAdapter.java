@@ -174,9 +174,11 @@ public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onItemDismiss(int position) {
         if (position==0)
             return;
-        update.update(sounds.get(position).getName(),false);
-        sound_helper.deleteSound(sounds.get(position));
+
+        Sound sound = sounds.get(position);
         sounds.remove(position);
+        sound_helper.deleteSound(sound);
+        update.update(sound.getName(),false);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, sounds.size());
     }

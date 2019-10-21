@@ -326,6 +326,9 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
         SoundContainer soundContainer = new SoundContainer();
 
         for(int i = 0; i < sounds.size();i++){
+            try {
+                Log.d("save-count",sounds.get(i).getName());
+            }catch (NullPointerException e){}
             soundContainer.addSound(sounds.get(i));
         }
 

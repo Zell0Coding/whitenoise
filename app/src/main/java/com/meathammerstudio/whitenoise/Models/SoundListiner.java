@@ -2,6 +2,7 @@ package com.meathammerstudio.whitenoise.Models;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -28,6 +29,7 @@ public class SoundListiner  {
             }
             MediaPlayer sound = MediaPlayer.create(mContext, _sound.getPath_sound());
             sound.setLooping(true); // Set looping
+
             sound.setVolume(_sound.getVolume(),_sound.getVolume());
             soundListiner.put(_sound,sound);
             Log.d("SIZE",soundListiner.size()+"");
