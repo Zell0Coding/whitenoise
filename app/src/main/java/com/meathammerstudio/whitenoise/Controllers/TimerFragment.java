@@ -2,6 +2,7 @@ package com.meathammerstudio.whitenoise.Controllers;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.meathammerstudio.whitenoise.Adapters.SwipeToDeleteCallback;
@@ -35,12 +38,13 @@ import com.meathammerstudio.whitenoise.Utills.i_helper;
 import java.util.Calendar;
 import java.util.List;
 
-public class TimerFragment extends Fragment implements View.OnClickListener, i_helper.i_timer {
+public class TimerFragment extends Fragment implements View.OnClickListener, i_helper.i_timer, SwipeToDeleteCallback.RecyclerItemTouchHelperListener {
 
     private ImageButton addTimer;
     private ItemTouchHelper mItemTouchHelper;
     private RecyclerView timerRecycler;
     private timerAdapter timerAdapter;
+    private CoordinatorLayout mCoordinatorLayout;
     private Manager mManager;
 
     @Override
@@ -58,7 +62,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
         addTimer = view.findViewById(R.id.add_timer);
         addTimer.setOnClickListener(this);
         timerAdapter = new timerAdapter(getContext(),this);
-
+        mCoordinatorLayout = view.findViewById(R.id.coordinator_layout);
         timerRecycler = view.findViewById(R.id.timer_recycler);
         timerRecycler.setItemAnimator(new DefaultItemAnimator());
         timerRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -73,9 +77,14 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ItemTouchHelper.Callback callback = new SwipeToDeleteCallback(timerAdapter);
-        mItemTouchHelper = new ItemTouchHelper(callback);
-        mItemTouchHelper.attachToRecyclerView(timerRecycler);
+        //ItemTouchHelper.Callback callback = new SwipeToDeleteCallback(timerAdapter);
+
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new SwipeToDeleteCallback(0, ItemTouchHelper.LEFT, this);
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(timerRecycler);
+
+
+        //mItemTouchHelper = new ItemTouchHelper(callback);
+        //mItemTouchHelper.attachToRecyclerView(timerRecycler);
 
         re_CreateTimers();
 
@@ -99,6 +108,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
         TimerContainer timerContainer = new TimerContainer();
         for(int i = 0; i < _timers.size(); i++){
             timerContainer.addTimer(_timers.get(i));
+            Log.d("TIMER","сохранение для :" + _timers.get(i).getHours() + ":" + _timers.get(i).getMinute());
         }
         Gson gson = new Gson();
         String json_data = gson.toJson(timerContainer);
@@ -109,6 +119,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
     public void enableTimer(Timer timer) {
         mManager.setCurrent_timer_hour(timer.getHours());
         mManager.setCurrent_timer_minute(timer.getMinute());
+        Log.d("TIMER","таймер включен");
         getActivity().startService(new Intent(getActivity(),timeServices.class));
     }
 
@@ -116,6 +127,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
     public void disableTimer() {
         try{
             getActivity().stopService(new Intent(getActivity(),timeServices.class));
+            Log.d("TIMER","таймер отключен");
         }catch (NullPointerException e){
             e.printStackTrace();
         }
@@ -153,6 +165,35 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
         }
     }
 
+
+
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
+        if (viewHolder instanceof timerAdapter.item) {
+            // get the removed item name to display it in snack bar
+
+            // backup of removed item for undo purpose
+            final Timer deletedItem = timerAdapter.getItem(viewHolder.getAdapterPosition());
+            final int deletedIndex = viewHolder.getAdapterPosition();
+
+            // remove the item from recycler view
+            timerAdapter.removeItem(viewHolder.getAdapterPosition());
+
+            // showing snack bar with Undo option
+            Snackbar snackbar = Snackbar
+                    .make(mCoordinatorLayout, "Removed from timers!", Snackbar.LENGTH_LONG);
+            snackbar.setAction("UNDO", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    // undo is selected, restore the deleted item
+                    timerAdapter.restoreItem(deletedItem, deletedIndex);
+                }
+            });
+            snackbar.setActionTextColor(getResources().getColor(R.color.colorText));
+            snackbar.show();
+        }
+    }
 
 
 }

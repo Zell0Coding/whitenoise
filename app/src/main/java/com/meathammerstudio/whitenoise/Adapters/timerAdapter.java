@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.meathammerstudio.whitenoise.Models.Timer;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class timerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter    {
+public class timerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
 
     private i_helper.i_timer mI_timer;
     private Context mContext;
@@ -85,21 +86,23 @@ public class timerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return timers.size();
     }
 
-    @Override
-    public boolean onItemMove(int fromPosition, int toPosition) {
-        Collections.swap(timers, fromPosition, toPosition);
-        notifyItemMoved(fromPosition, toPosition);
-        return true;
-    }
-
-    @Override
-    public void onItemDismiss(int position) {
-
+    public void removeItem(int position) {
+        if(timers.get(position).isEnable()) mI_timer.disableTimer();
         timers.remove(position);
         mI_timer.updateTimer(timers);
-        mI_timer.disableTimer();
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, timers.size());
+    }
+
+    public void restoreItem(Timer item, int position) {
+        timers.add(position, item);
+        mI_timer.updateTimer(timers);
+        if(item.isEnable()) mI_timer.enableTimer(item);
+        notifyItemInserted(position);
+    }
+
+    public Timer getItem(int position){
+        return timers.get(position);
     }
 
     public void addTimer(Timer timer){
@@ -124,15 +127,18 @@ public class timerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
 
-    class item extends RecyclerView.ViewHolder{
+    public class item extends RecyclerView.ViewHolder{
 
         TextView time;
         SwitchCompat mSwitchCompat;
+        ConstraintLayout viewBackground, viewForeground;
 
          item(@NonNull View itemView) {
             super(itemView);
             time = itemView.findViewById(R.id.timer_time);
             mSwitchCompat = itemView.findViewById(R.id.timer_switch);
+            viewBackground = itemView.findViewById(R.id.background_delete);
+            viewForeground = itemView.findViewById(R.id.background_item);
         }
     }
 }
