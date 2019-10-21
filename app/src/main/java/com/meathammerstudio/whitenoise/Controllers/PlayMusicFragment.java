@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -55,6 +56,8 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     private ImageButton night;
     private ImageButton allPlay;
 
+    private RelativeLayout buttonWrapper;
+
     private ImageView whiteNoiseIndicator;
     private ImageView rainIndicator;
     private ImageView thunderIndicator;
@@ -77,6 +80,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
         View view = inflater.inflate(R.layout.play_fragment,container,false);
 
         whiteNoiseIndicator = view.findViewById(R.id.white_noise_indicator);
+        buttonWrapper = view.findViewById(R.id.button_wrapper);
         rainIndicator = view.findViewById(R.id.rain_indicator);
         thunderIndicator = view.findViewById(R.id.thunder_indicator);
         oceanIndicator = view.findViewById(R.id.ocean_indicator);
@@ -132,11 +136,14 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     private void reCreateSounds(){
         SoundContainer soundContainer = loadSound();
         if(soundContainer!=null){
-            for(int i = 1; i < soundContainer.mSoundList.size();i++){
-                mMusicAdapter.addNewSong(soundContainer.mSoundList.get(i),true);
-                update(soundContainer.mSoundList.get(i).getName(),soundContainer.mSoundList.get(i).isEnabled());
-                if(soundContainer.mSoundList.get(i).isEnabled()) allPlay.setImageResource(R.drawable.all_pause);
-
+            if(soundContainer.mSoundList.size()>1){
+                for(int i = 1; i < soundContainer.mSoundList.size();i++){
+                    mMusicAdapter.addNewSong(soundContainer.mSoundList.get(i),true);
+                    update(soundContainer.mSoundList.get(i).getName(),soundContainer.mSoundList.get(i).isEnabled());
+                    if(soundContainer.mSoundList.get(i).isEnabled()) allPlay.setImageResource(R.drawable.all_pause);
+                }
+            }else{
+                buttonWrapper.setVisibility(View.GONE);
             }
         }
     }
@@ -262,9 +269,9 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     private void updateStateAllButtonIcon(){
 
         List<Sound> sounds = mMusicAdapter.getItems();
-        if(sounds!=null){
+        if(sounds.size() > 1){
+            buttonWrapper.setVisibility(View.VISIBLE);
             for(int i = 1; i < sounds.size();i++){
-
                 if(sounds.get(i)!=null){
                     if(sounds.get(i).isEnabled()){
                         allPlay.setImageResource(R.drawable.all_pause);
@@ -273,6 +280,8 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
                 }
             }
             allPlay.setImageResource(R.drawable.all_play);
+        }else{
+            buttonWrapper.setVisibility(View.GONE);
         }
 
     }
