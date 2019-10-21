@@ -99,9 +99,9 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
 
     private void addFragment(String fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         switch (fragment){
             case Utill.MUSIC_FRAGMENT:
-
                 PlayMusicFragment playMusicFragment = new PlayMusicFragment();
                 fragmentTransaction.replace(R.id.container,playMusicFragment);
                 mActionBar.setDisplayHomeAsUpEnabled(false);
