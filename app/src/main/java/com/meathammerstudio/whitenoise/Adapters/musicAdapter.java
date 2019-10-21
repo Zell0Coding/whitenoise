@@ -196,14 +196,35 @@ public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return sounds.get(position);
     }
     public void addNewSong(Sound _sound, boolean reCreate){
+
+        int current_id = 0;
+        boolean include = false;
+
         for(int i = 1; i < sounds.size();i++){
             if(sounds.get(i).getName().equals(_sound.getName())){
-                return;
+
+                current_id = i;
+                include = true;
+                break;
             }
         }
-        sounds.add(_sound);
-        sound_helper.addSound(_sound, reCreate);
-        notifyItemChanged(sounds.size()-1);
+        if(!include){
+            sounds.add(_sound);
+            sound_helper.addSound(_sound, reCreate);
+            notifyItemChanged(sounds.size()-1);
+            return;
+        }else{
+            if(sounds.get(current_id).isEnabled()){
+                sounds.get(current_id).setEnabled(false);
+                update.update(sounds.get(current_id).getName(),false);
+                sound_helper.stopSound(sounds.get(current_id));
+            }else{
+                sounds.get(current_id).setEnabled(true);
+                update.update(sounds.get(current_id).getName(),true);
+                sound_helper.playSound(sounds.get(current_id));
+            }
+            notifyItemChanged(current_id);
+        }
     }
 
     class labelView extends RecyclerView.ViewHolder{
