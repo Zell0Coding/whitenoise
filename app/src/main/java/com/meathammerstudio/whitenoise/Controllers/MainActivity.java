@@ -1,14 +1,25 @@
 package com.meathammerstudio.whitenoise.Controllers;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.TargetApi;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -21,19 +32,30 @@ import com.google.gson.GsonBuilder;
 import com.meathammerstudio.whitenoise.Models.Sound;
 import com.meathammerstudio.whitenoise.Models.SoundContainer;
 import com.meathammerstudio.whitenoise.Models.SoundListiner;
+import com.meathammerstudio.whitenoise.Models.Timer;
 import com.meathammerstudio.whitenoise.Models.currentLanguage;
 import com.meathammerstudio.whitenoise.R;
+import com.meathammerstudio.whitenoise.Services.timeServices;
 import com.meathammerstudio.whitenoise.Utills.Manager;
 import com.meathammerstudio.whitenoise.Utills.StorageManager;
 import com.meathammerstudio.whitenoise.Utills.Utill;
 import com.meathammerstudio.whitenoise.Services.musicServices;
+import com.meathammerstudio.whitenoise.Utills.i_helper;
 
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements LanguageFragment.selectLanguage{
+public class MainActivity extends AppCompatActivity implements LanguageFragment.selectLanguage, i_helper.i_timer_servies{
 
     private Manager mManager;
     private ActionBar mActionBar;
+    SoundPool soundPool;
+
+    MediaPlayer mp1;
+    MediaPlayer mp2;
+
+
+    private MediaPlayer mCurrentPlayer = null;
+    private MediaPlayer mNextPlayer = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
         switch (fragment){
             case Utill.MUSIC_FRAGMENT:
                 PlayMusicFragment playMusicFragment = new PlayMusicFragment();
-                fragmentTransaction.replace(R.id.container,playMusicFragment);
+                fragmentTransaction.replace(R.id.container,playMusicFragment,"music");
                 mActionBar.setDisplayHomeAsUpEnabled(false);
                 mActionBar.setDisplayShowHomeEnabled(false);
                 mActionBar.setDisplayShowTitleEnabled(false);
@@ -111,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
                 break;
             case Utill.TIMER_FRAGMENT:
                 TimerFragment TimerFragment = new TimerFragment();
-                fragmentTransaction.replace(R.id.container,TimerFragment);
+                fragmentTransaction.replace(R.id.container,TimerFragment,"timer");
                 mActionBar.setDisplayHomeAsUpEnabled(true);
                 mActionBar.setDisplayShowHomeEnabled(true);
                 mActionBar.setDisplayShowTitleEnabled(true);
@@ -204,4 +226,46 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
 
     }
 
+
+    @Override
+    public void startTimer(Timer timer) {
+        mManager.setCurrent_timer_hour(timer.getHours());
+        mManager.setCurrent_timer_minute(timer.getMinute());
+        Log.d("TIMER","таймер включен");
+
+        Intent intent = new Intent(getApplicationContext(), timeServices.class);
+        PendingIntent pendingIntent = createPendingResult(0,intent,0);
+        intent.putExtra("PARAM_INTENT", pendingIntent);
+        startService(intent);
+
+    }
+
+    @Override
+    public void stopTimer() {
+        try{
+            stopService(new Intent(this,timeServices.class));
+            Log.d("TIMER","таймер отключен");
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==100){
+            //TODO:обновляем фрагмент
+
+            Fragment current = (Fragment) getSupportFragmentManager().findFragmentById(R.id.container);
+            if(current!=null){
+                if(current.getTag().equals("music")){
+                    Log.d("ВЫБРАННЫЙ-","МУЗЫКА");
+                    addFragment(Utill.MUSIC_FRAGMENT);
+                }else if(current.getTag().equals("timer")){
+                    addFragment(Utill.TIMER_FRAGMENT);
+                }
+            }
+
+        }
+    }
 }

@@ -69,4 +69,5 @@ public class Sound {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
 }

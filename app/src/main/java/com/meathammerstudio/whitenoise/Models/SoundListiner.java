@@ -23,9 +23,9 @@ public class SoundListiner  {
         if(_sound!=null){
             for (Map.Entry<Sound,MediaPlayer> entry: soundListiner.entrySet())
             {
-              if(entry.getKey().getName().equals(_sound.getName())){
-                  return;
-              }
+                if(entry.getKey().getName().equals(_sound.getName())){
+                    return;
+                }
             }
             MediaPlayer sound = MediaPlayer.create(mContext, _sound.getPath_sound());
             sound.setLooping(true); // Set looping

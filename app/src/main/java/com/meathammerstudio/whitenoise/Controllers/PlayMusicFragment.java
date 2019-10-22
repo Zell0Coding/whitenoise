@@ -1,6 +1,8 @@
 package com.meathammerstudio.whitenoise.Controllers;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.util.Log;
@@ -285,7 +287,6 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
         }
 
     }
-
 
     // ------------------------- Добавление и изменение песен --------------------------
 

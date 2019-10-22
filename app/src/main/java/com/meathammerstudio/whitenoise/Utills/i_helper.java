@@ -25,4 +25,9 @@ public interface i_helper {
         void selectLanguage(Languages.language language);
     }
 
+    interface i_timer_servies{
+        void startTimer(Timer timer);
+        void stopTimer();
+    }
+
 }

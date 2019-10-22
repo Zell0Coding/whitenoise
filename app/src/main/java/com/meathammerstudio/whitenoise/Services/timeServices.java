@@ -1,5 +1,6 @@
 package com.meathammerstudio.whitenoise.Services;
 
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.CountDownTimer;
@@ -8,6 +9,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.meathammerstudio.whitenoise.Controllers.TimerFragment;
 import com.meathammerstudio.whitenoise.Models.SoundContainer;
 import com.meathammerstudio.whitenoise.Models.SoundListiner;
 import com.meathammerstudio.whitenoise.Models.TimerContainer;
@@ -15,13 +17,12 @@ import com.meathammerstudio.whitenoise.Utills.Manager;
 import com.meathammerstudio.whitenoise.Utills.StorageManager;
 import com.meathammerstudio.whitenoise.Utills.Utill;
 
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class timeServices extends Service {
 
     private Manager mManager;
     private CountDownTimer timer;
+    private PendingIntent mPendingIntent;
 
     public IBinder onBind(Intent arg0) {
 
@@ -37,6 +38,9 @@ public class timeServices extends Service {
 
         mManager = Manager.getInstance();
         startTimer();
+
+        mPendingIntent = intent.getParcelableExtra("PARAM_INTENT");
+
         return musicServices.START_STICKY;
     }
 
@@ -123,6 +127,12 @@ public class timeServices extends Service {
     public void onDestroy() {
         timer.cancel();
         Log.d("Закрыть","закрыть");
+        try{
+            mPendingIntent.send(100);
+        }catch (PendingIntent.CanceledException e){
+
+        }
+
         super.onDestroy();
     }
 

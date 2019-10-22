@@ -1,7 +1,11 @@
 package com.meathammerstudio.whitenoise.Controllers;
 
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,6 +51,15 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
     private CoordinatorLayout mCoordinatorLayout;
     private Manager mManager;
 
+    private i_helper.i_timer_servies services;
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        services = (i_helper.i_timer_servies) context;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,14 +90,11 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //ItemTouchHelper.Callback callback = new SwipeToDeleteCallback(timerAdapter);
 
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new SwipeToDeleteCallback(0, ItemTouchHelper.LEFT, this);
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(timerRecycler);
 
 
-        //mItemTouchHelper = new ItemTouchHelper(callback);
-        //mItemTouchHelper.attachToRecyclerView(timerRecycler);
 
         re_CreateTimers();
 
@@ -100,6 +110,9 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
             }
         }
     }
+
+
+
 
     // ------------------ СОХРАНЕНИЕ И ЗАГРУЗКА -------------------------------
 
@@ -117,20 +130,13 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
 
     @Override
     public void enableTimer(Timer timer) {
-        mManager.setCurrent_timer_hour(timer.getHours());
-        mManager.setCurrent_timer_minute(timer.getMinute());
-        Log.d("TIMER","таймер включен");
-        getActivity().startService(new Intent(getActivity(),timeServices.class));
+        services.startTimer(timer);
+
     }
 
     @Override
     public void disableTimer() {
-        try{
-            getActivity().stopService(new Intent(getActivity(),timeServices.class));
-            Log.d("TIMER","таймер отключен");
-        }catch (NullPointerException e){
-            e.printStackTrace();
-        }
+        services.stopTimer();
     }
 
     private TimerContainer loadTimers(){
@@ -146,6 +152,12 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
             return null;
         }
     }
+
+
+    private void updateState(){
+        timerAdapter.notifyDataSetChanged();
+    }
+
 
     // --------------------------------------------------------------------
 

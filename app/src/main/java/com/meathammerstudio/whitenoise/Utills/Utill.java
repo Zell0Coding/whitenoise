@@ -33,12 +33,11 @@ public abstract class Utill {
     public static final int FOREST_IMG = R.drawable.forests_bird;
     public static final int NIGHT_IMG = R.drawable.night;
 
-    public static final int RUSSIA = R.drawable.icons8_russian_federation_96;
+    public static final int RUSSIA =  R.drawable.icons8_russian_federation_96;
     public static final int ENGLISH = R.drawable.icons8_usa_96;
     public static final int DEUTSCH = R.drawable.icons8_germany_96;
     public static final int ESPANOL = R.drawable.icons8_spain_96;
     public static final int PORTUGUES = R.drawable.icons8_portugal_96;
-    public static final int HINDI = R.drawable.icons8_india_96;
     public static final int CHIENES = R.drawable.icons8_china_96;
     public static final int INDONESIAN = R.drawable.icons8_indonesia_96;
     public static final int TURKISH = R.drawable.icons8_turkey_96;
