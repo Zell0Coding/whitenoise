@@ -24,6 +24,10 @@ public class timeServices extends Service {
     private CountDownTimer timer;
     private PendingIntent mPendingIntent;
 
+    private final int STOPTIMER = 100;
+    private final int BREAK = 0;
+    private int state;
+
     public IBinder onBind(Intent arg0) {
 
         return null;
@@ -40,11 +44,13 @@ public class timeServices extends Service {
         startTimer();
 
         mPendingIntent = intent.getParcelableExtra("PARAM_INTENT");
+        state = BREAK;
 
         return musicServices.START_STICKY;
     }
 
     private void startTimer(){
+
 
         int minute = (mManager.getCurrent_timer_hour()*60) + mManager.getCurrent_timer_minute();
         final long millisecund = minute * 60 * 1000;
@@ -54,10 +60,28 @@ public class timeServices extends Service {
             @Override
             public void onTick(long millisUntilFinished) {
                 Log.d("осталось",millisUntilFinished/1000+"");
+                try{
+                    Intent intent = new Intent();
+
+                    long h = ((millisUntilFinished/1000)/3600);
+                    long m = ((millisUntilFinished/1000)%3600)/60;
+                    long s = ((millisUntilFinished/1000)%3600)%60;
+
+                    String hours = (h<9)?"0"+ h : "" + h;
+                    String minute = (m<9)?"0"+ m : "" + m;
+                    String sec = (s<9)?"0"+ s : "" + s;
+
+                    intent.putExtra("time",hours+":"+minute+":"+sec);
+                    mPendingIntent.send(getApplicationContext(),200,intent);
+                }catch (PendingIntent.CanceledException e){
+                    Log.d("Закрыть","ERROR");
+                }
+
             }
 
             @Override
             public void onFinish() {
+                state = STOPTIMER;
                 loadSound();
                 loadTimer();
                 stopSelf();
@@ -128,7 +152,7 @@ public class timeServices extends Service {
         timer.cancel();
         Log.d("Закрыть","закрыть");
         try{
-            mPendingIntent.send(100);
+            mPendingIntent.send(state);
         }catch (PendingIntent.CanceledException e){
 
         }

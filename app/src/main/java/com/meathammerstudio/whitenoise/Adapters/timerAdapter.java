@@ -28,6 +28,9 @@ public class timerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context mContext;
     private List<Timer> timers;
 
+    private int current_timer;
+
+
     public timerAdapter(Context _context, i_helper.i_timer _interface){
         mContext = _context;
         mI_timer = _interface;
@@ -50,8 +53,8 @@ public class timerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         String hours = (timers.get(position).getHours()<10) ? "0"+timers.get(position).getHours() : ""+timers.get(position).getHours();
         String minutes = (timers.get(position).getMinute()<10) ? "0"+timers.get(position).getMinute() : ""+timers.get(position).getMinute();
-
-        String timer_label =hours+":" + minutes;
+        String timer_label;
+        timer_label =hours+":" + minutes;
         Item.time.setText(timer_label);
 
         if(timers.get(position).isEnable()){
@@ -80,6 +83,8 @@ public class timerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             }
         });
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -111,7 +116,6 @@ public class timerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     private void ReSelectItem(int position, boolean isEnable){
-        timers.get(position).setEnable(isEnable);
         if(isEnable){
             for(int i = 0; i < timers.size();i++){
                 if(i!=position){
@@ -120,8 +124,12 @@ public class timerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 }
             }
         }
+
+        if(timers.get(position).isEnable() || isEnable){
+            mI_timer.disableTimer();
+        }
+        timers.get(position).setEnable(isEnable);
         mI_timer.updateTimer(timers);
-        mI_timer.disableTimer();
         if(isEnable) mI_timer.enableTimer(timers.get(position));
     }
 

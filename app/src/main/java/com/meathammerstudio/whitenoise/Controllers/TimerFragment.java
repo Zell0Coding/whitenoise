@@ -130,6 +130,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
 
     @Override
     public void enableTimer(Timer timer) {
+
         services.startTimer(timer);
 
     }
@@ -139,7 +140,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
         services.stopTimer();
     }
 
-    private TimerContainer loadTimers(){
+    public TimerContainer loadTimers(){
 
         try {
             String data = StorageManager.readFromFile(Utill.TIMER_SELECTED, getContext());
@@ -154,8 +155,8 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
     }
 
 
-    private void updateState(){
-        timerAdapter.notifyDataSetChanged();
+    public void updateTimer(String text){
+        Log.d("SEC",text);
     }
 
 

@@ -253,19 +253,34 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Fragment current = (Fragment) getSupportFragmentManager().findFragmentById(R.id.container);
         if(resultCode==100){
             //TODO:обновляем фрагмент
-
-            Fragment current = (Fragment) getSupportFragmentManager().findFragmentById(R.id.container);
             if(current!=null){
-                if(current.getTag().equals("music")){
-                    Log.d("ВЫБРАННЫЙ-","МУЗЫКА");
-                    addFragment(Utill.MUSIC_FRAGMENT);
-                }else if(current.getTag().equals("timer")){
-                    addFragment(Utill.TIMER_FRAGMENT);
+                try{
+                    if(current.getTag().equals("music")){
+                        Log.d("ВЫБРАННЫЙ-","МУЗЫКА");
+                        addFragment(Utill.MUSIC_FRAGMENT);
+
+
+                    }else if(current.getTag().equals("timer")){
+                        addFragment(Utill.TIMER_FRAGMENT);
+                    }
+                }catch (NullPointerException e){
+
                 }
             }
+        }
+        if(resultCode == 200){
+            if(current!=null){
+                try{
+                    if(current.getTag().equals("timer")){
+                        ((TimerFragment)current).updateTimer(data.getStringExtra("time"));
+                    }
+                }catch (NullPointerException e){
 
+                }
+            }
         }
     }
 }
