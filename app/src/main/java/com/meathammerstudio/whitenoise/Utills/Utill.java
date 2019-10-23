@@ -30,7 +30,7 @@ public abstract class Utill {
     public static final int WIND_IMG = R.drawable.wind;
     public static final int RIVER_IMG = R.drawable.river;
     public static final int FIRE_IMG = R.drawable.fire;
-    public static final int FOREST_IMG = R.drawable.forests_bird;
+    public static final int FOREST_IMG = R.drawable.forest;
     public static final int NIGHT_IMG = R.drawable.night;
 
     public static final int RUSSIA =  R.drawable.icons8_russian_federation_96;

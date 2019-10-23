@@ -41,8 +41,9 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    app:cardElevation="8dp"
-                    app:cardCornerRadius="20dp">
+                    app:cardBackgroundColor="@android:color/transparent"
+
+                    app:cardCornerRadius="22dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -81,7 +82,8 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     app:cardElevation="8dp"
-                    app:cardCornerRadius="20dp">
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="22dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -119,8 +121,8 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    app:cardElevation="8dp"
-                    app:cardCornerRadius="20dp">
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="22dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -160,8 +162,8 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    app:cardElevation="8dp"
-                    app:cardCornerRadius="20dp">
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="22dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -199,8 +201,8 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    app:cardElevation="8dp"
-                    app:cardCornerRadius="20dp">
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="22dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -238,8 +240,8 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    app:cardElevation="8dp"
-                    app:cardCornerRadius="20dp">
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="22dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -279,8 +281,8 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    app:cardElevation="8dp"
-                    app:cardCornerRadius="20dp">
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="22dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -318,8 +320,8 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    app:cardElevation="8dp"
-                    app:cardCornerRadius="20dp">
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="22dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -330,7 +332,7 @@
                             android:background="@android:color/transparent"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/forests_bird"
+                            android:src="@drawable/forest"
                             android:scaleType="fitXY">
                         </ImageButton>
 
@@ -357,8 +359,8 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    app:cardElevation="8dp"
-                    app:cardCornerRadius="20dp">
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="22dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"

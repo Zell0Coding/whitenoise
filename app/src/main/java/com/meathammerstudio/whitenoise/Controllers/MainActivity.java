@@ -21,22 +21,27 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.meathammerstudio.whitenoise.Models.Sound;
-import com.meathammerstudio.whitenoise.Models.SoundContainer;
-import com.meathammerstudio.whitenoise.Models.SoundListiner;
 import com.meathammerstudio.whitenoise.Models.Timer;
 import com.meathammerstudio.whitenoise.Models.currentLanguage;
 import com.meathammerstudio.whitenoise.R;
 import com.meathammerstudio.whitenoise.Services.timeServices;
 import com.meathammerstudio.whitenoise.Utills.Manager;
+import com.meathammerstudio.whitenoise.Utills.PerfectLoopMediaPlayer;
 import com.meathammerstudio.whitenoise.Utills.StorageManager;
 import com.meathammerstudio.whitenoise.Utills.Utill;
 import com.meathammerstudio.whitenoise.Services.musicServices;
@@ -88,6 +93,9 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
 
         Intent sound = new Intent(getApplicationContext(), musicServices.class );
         startService(sound);
+
+
+        startAd();
 
     }
 
@@ -225,6 +233,35 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
         }
 
     }
+
+    private void startAd(){
+
+        final InterstitialAd mInterstitialAd = mManager.getMInterstitialAd();
+
+
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+
+                    if (mInterstitialAd.isLoaded()) {
+                        mInterstitialAd.show();
+                    }
+
+                }
+            }, 3000); //specify the number of milliseconds
+
+
+        }
+
+
+
+    }
+
 
 
     @Override

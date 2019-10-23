@@ -29,5 +29,9 @@
         <item name="android:textSize">13sp</item>
         <item name="android:background">@drawable/day_button_background_non_include</item>
     </style>
+
+    <style name="AppTheme.WhiteAccent">
+        <item name="colorAccent">@color/colorSelected</item> <!-- Whatever color you want-->
+    </style>
     
 </resources>

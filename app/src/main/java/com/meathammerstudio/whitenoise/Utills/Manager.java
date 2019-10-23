@@ -1,6 +1,7 @@
 package com.meathammerstudio.whitenoise.Utills;
 
 import com.meathammerstudio.whitenoise.Models.SoundListiner;
+import com.google.android.gms.ads.InterstitialAd;
 
 public class Manager {
 
@@ -11,6 +12,9 @@ public class Manager {
 
     private int current_timer_hour;
     private int current_timer_minute;
+
+    private InterstitialAd mMInterstitialAd;
+
     private String currentLang;
 
     private Manager(){mSoundListiner = new SoundListiner();}
@@ -28,6 +32,14 @@ public class Manager {
 
     public void setCurrentLang(String currentLang) {
         this.currentLang = currentLang;
+    }
+
+    public InterstitialAd getMInterstitialAd() {
+        return mMInterstitialAd;
+    }
+
+    public void setMInterstitialAd(InterstitialAd MInterstitialAd) {
+        mMInterstitialAd = MInterstitialAd;
     }
 
     public SoundListiner getSoundListiner() {
