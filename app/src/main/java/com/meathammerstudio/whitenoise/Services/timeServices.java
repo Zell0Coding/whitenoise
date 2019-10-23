@@ -69,15 +69,18 @@ public class timeServices extends Service {
 
                     String hours = (h<9)?"0"+ h : "" + h;
                     String minute = (m<9)?"0"+ m : "" + m;
-                    String time;
+                    int s_;
 
                     if(s%2==0){
-                        time = hours+":"+minute;
+                        s_ = 1;
                     }else{
-                        time = hours+" "+minute;
+                        s_ = 0;
                     }
 
-                    intent.putExtra("time",time);
+                    intent.putExtra("hours",hours);
+                    intent.putExtra("minute",minute);
+                    intent.putExtra("dots",s_);
+
                     mPendingIntent.send(getApplicationContext(),200,intent);
                 }catch (PendingIntent.CanceledException e){
                     Log.d("Закрыть","ERROR");

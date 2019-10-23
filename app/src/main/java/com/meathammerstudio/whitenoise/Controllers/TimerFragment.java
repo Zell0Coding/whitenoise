@@ -52,7 +52,9 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
     private CoordinatorLayout mCoordinatorLayout;
     private Manager mManager;
 
-    private TextView timerText;
+    private TextView timerTextHours;
+    private TextView timerTextDots;
+    private TextView timerTextMinute;
 
     private i_helper.i_timer_servies services;
 
@@ -77,7 +79,11 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
 
         addTimer = view.findViewById(R.id.add_timer);
         addTimer.setOnClickListener(this);
-        timerText = view.findViewById(R.id.timer_text);
+
+        timerTextHours = view.findViewById(R.id.timer_hours);
+        timerTextDots = view.findViewById(R.id.timer_dots);
+        timerTextMinute = view.findViewById(R.id.timer_minute);
+
         timerAdapter = new timerAdapter(getContext(),this);
         mCoordinatorLayout = view.findViewById(R.id.coordinator_layout);
         timerRecycler = view.findViewById(R.id.timer_recycler);
@@ -136,14 +142,20 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
     public void enableTimer(Timer timer) {
 
         services.startTimer(timer);
-        timerText.setVisibility(View.VISIBLE);
+        timerTextHours.setVisibility(View.VISIBLE);
+        timerTextDots.setVisibility(View.VISIBLE);
+        timerTextMinute.setVisibility(View.VISIBLE);
+
 
     }
 
     @Override
     public void disableTimer() {
         services.stopTimer();
-        timerText.setVisibility(View.GONE);
+        timerTextHours.setVisibility(View.GONE);
+        timerTextDots.setVisibility(View.GONE);
+        timerTextMinute.setVisibility(View.GONE
+        );
     }
 
     public TimerContainer loadTimers(){
@@ -161,9 +173,21 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
     }
 
 
-    public void updateTimer(String text){
-        timerText.setText(text);
-        if(timerText.getVisibility()==View.GONE) timerText.setVisibility(View.VISIBLE);
+    public void updateTimer(String hours, String minute, int dots){
+        timerTextHours.setText(hours);
+        timerTextMinute.setText(minute);
+
+        if(timerTextHours.getVisibility()==View.GONE){
+            timerTextHours.setVisibility(View.VISIBLE);
+            timerTextMinute.setVisibility(View.VISIBLE);
+            timerTextDots.setVisibility(View.VISIBLE);
+        }
+
+        if(dots==1) {
+            timerTextDots.setText(":");
+        }else{
+            timerTextDots.setText("");
+        }
     }
 
     // --------------------------------------------------------------------

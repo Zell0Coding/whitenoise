@@ -50,19 +50,53 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+
+
     <TextView
-        android:id="@+id/timer_text"
+        android:id="@+id/timer_hours"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="45sp"
+
         android:fontFamily="@font/roboto_bold"
+        android:text="00"
         android:textColor="@color/colorSelected"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="10dp"
+
+        android:textSize="45sp"
         android:visibility="gone"
-        tools:text="00:15">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/timer_dots">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/timer_dots"
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_bold"
+        android:text=":"
+        android:textColor="@color/colorSelected"
+
+        android:textSize="45sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/coordinator_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/timer_minute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:fontFamily="@font/roboto_bold"
+        android:text="15"
+        android:textColor="@color/colorSelected"
+
+        android:textSize="45sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/timer_dots">
 
     </TextView>
 

@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
             if(current!=null){
                 try{
                     if(current.getTag().equals("timer")){
-                        ((TimerFragment)current).updateTimer(data.getStringExtra("time"));
+                        ((TimerFragment)current).updateTimer(data.getStringExtra("hours"),data.getStringExtra("minute"),data.getIntExtra("dots",0));
                     }
                 }catch (NullPointerException e){
 
