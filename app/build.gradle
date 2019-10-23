@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            keyAlias = 'whitenoise'
+            keyPassword 'whitenoise'
+            storePassword 'whitenoise'
+            storeFile file('E:\\meathammerstudio\\Projects\\Work\\InWork\\WhiteNoise\\whitenoise\\whitenoise.jks')
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.meathammerstudio.whitenoise"
@@ -14,6 +22,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
