@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "106796483050",
+    "firebase_url": "https://whitenoise-4039f.firebaseio.com",
+    "project_id": "whitenoise-4039f",
+    "storage_bucket": "whitenoise-4039f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:106796483050:android:33554438bc564b88c63293",
+        "android_client_info": {
+          "package_name": "com.ponicamedia.android.whitenoise"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "106796483050-2envtk2vao70t2t8vece4g4tpb95nbl4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEZhBd7kSbT4Pc5cVJWymJ50JKpPxPUS4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "106796483050-2envtk2vao70t2t8vece4g4tpb95nbl4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
