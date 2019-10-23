@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,8 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
     private CoordinatorLayout mCoordinatorLayout;
     private Manager mManager;
 
+    private TextView timerText;
+
     private i_helper.i_timer_servies services;
 
 
@@ -74,6 +77,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
 
         addTimer = view.findViewById(R.id.add_timer);
         addTimer.setOnClickListener(this);
+        timerText = view.findViewById(R.id.timer_text);
         timerAdapter = new timerAdapter(getContext(),this);
         mCoordinatorLayout = view.findViewById(R.id.coordinator_layout);
         timerRecycler = view.findViewById(R.id.timer_recycler);
@@ -132,12 +136,14 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
     public void enableTimer(Timer timer) {
 
         services.startTimer(timer);
+        timerText.setVisibility(View.VISIBLE);
 
     }
 
     @Override
     public void disableTimer() {
         services.stopTimer();
+        timerText.setVisibility(View.GONE);
     }
 
     public TimerContainer loadTimers(){
@@ -156,9 +162,9 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
 
 
     public void updateTimer(String text){
-        Log.d("SEC",text);
+        timerText.setText(text);
+        if(timerText.getVisibility()==View.GONE) timerText.setVisibility(View.VISIBLE);
     }
-
 
     // --------------------------------------------------------------------
 
