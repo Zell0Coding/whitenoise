@@ -11,4 +11,13 @@
     <string name="support">支持</string>
     <string name="timer">计时器</string>
     <string name="timing">定时</string>
+    <string name="monday">MO</string>
+    <string name="Sunday">SU</string>
+    <string name="friday">FR</string>
+    <string name="language">语言</string>
+    <string name="saturday">SA</string>
+    <string name="sleep_words">该睡觉了！</string>
+    <string name="thursday">TH</string>
+    <string name="tuesday">TU</string>
+    <string name="wednesday">WE</string>
 </resources>

@@ -8,18 +8,28 @@ public class Sound {
     private String name;
     private int path_img;
     private int path_sound;
-    private int sound_sec;
+    private int path_sound_duplicate;
+    private int sound_sec = 0;
     private float volume;
     private boolean enabled;
 
 
-    public Sound(String _name,int _path_img,int _path_sound, float _volume, boolean _enable, int _sound_sec){
+    public Sound(String _name,int _path_img,int _path_sound, int path_sound_duplicate, float _volume, boolean _enable, int _sound_sec){
         this.name = _name;
         this.path_img = _path_img;
         this.volume = _volume;
         this.enabled = _enable;
         this.path_sound = _path_sound;
+        this.path_sound_duplicate = path_sound_duplicate;
         this.sound_sec = _sound_sec;
+    }
+
+    public int getPath_sound_duplicate() {
+        return path_sound_duplicate;
+    }
+
+    public void setPath_sound_duplicate(int path_sound_duplicate) {
+        this.path_sound_duplicate = path_sound_duplicate;
     }
 
     public int getPath_img() {

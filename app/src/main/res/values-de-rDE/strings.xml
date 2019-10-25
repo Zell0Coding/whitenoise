@@ -11,4 +11,13 @@
     <string name="timing">Timing</string>
     <string name="days_of_week">Wählen Sie die Wochentage aus</string>
     <string name="support">Unterstützung</string>
+    <string name="monday">MO</string>
+    <string name="Sunday">SO</string>
+    <string name="friday">FR</string>
+    <string name="language">Sprache</string>
+    <string name="saturday">SA</string>
+    <string name="sleep_words">Zeit ins Bett zu gehen!</string>
+    <string name="thursday">DO</string>
+    <string name="tuesday">DI</string>
+    <string name="wednesday">MI</string>
 </resources>

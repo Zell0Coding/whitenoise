@@ -36,7 +36,7 @@ public class TimerAddFragment extends Fragment {
 
         mTimePicker = view.findViewById(R.id.timer_picker);
         mImageButton = view.findViewById(R.id.add_new_timer);
-
+        
         mTimePicker.setCurrentHour(0);
         mTimePicker.setCurrentMinute(15);
 

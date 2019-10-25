@@ -8,12 +8,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -31,6 +34,8 @@ import com.ponicamedia.android.whitenoise.Models.currentLanguage;
 import com.ponicamedia.android.whitenoise.R;
 import com.ponicamedia.android.whitenoise.Services.timeServices;
 import com.ponicamedia.android.whitenoise.Utills.Manager;
+import com.ponicamedia.android.whitenoise.Utills.PerfectLoopMediaPlayer;
+import com.ponicamedia.android.whitenoise.Utills.PersistantStorage;
 import com.ponicamedia.android.whitenoise.Utills.StorageManager;
 import com.ponicamedia.android.whitenoise.Utills.Utill;
 import com.ponicamedia.android.whitenoise.Services.musicServices;
@@ -43,50 +48,29 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
     private Manager mManager;
     private ActionBar mActionBar;
     private FirebaseAnalytics mFirebaseAnalytics;
-    SoundPool soundPool;
 
-    MediaPlayer mp1;
-    MediaPlayer mp2;
-
-
-    private MediaPlayer mCurrentPlayer = null;
-    private MediaPlayer mNextPlayer = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mManager = Manager.getInstance();
         mManager.getSoundListiner().setContext(getApplicationContext());
-
-
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         int width = size.x;
         mManager.setWidth(width);
-
-
         Toolbar mActionBarToolbar =  findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mActionBarToolbar);
         mActionBar = getSupportActionBar();
-
         mActionBar.setDisplayShowTitleEnabled(false);
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        PlayMusicFragment playMusicFragment = new PlayMusicFragment();
-        fragmentTransaction.replace(R.id.container,playMusicFragment);
-        fragmentTransaction.commit();
-
+        addFragment();
         setSettings();
-
         Intent sound = new Intent(getApplicationContext(), musicServices.class );
         startService(sound);
-
         initialFirebase();
         startAd();
-
 
     }
 
@@ -258,7 +242,18 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
         Log.d("#aa",mFirebaseAnalytics.getFirebaseInstanceId());
     }
 
+    private void addFragment(){
 
+        PersistantStorage.init(getApplicationContext());
+        boolean isFirst = PersistantStorage.getProperty("first_start");
+        if(!isFirst){
+            addFragment(Utill.SETTINGS);
+            PersistantStorage.addProperty("first_start",true);
+        }else{
+            addFragment(Utill.MUSIC_FRAGMENT);
+        }
+
+    }
 
     @Override
     public void startTimer(Timer timer) {

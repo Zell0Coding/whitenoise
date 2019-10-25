@@ -11,4 +11,13 @@
     <string name="timing">Выбор времени</string>
     <string name="days_of_week">Выбор дней недели</string>
     <string name="support">По всем вопросам о работе приложения обращаться на почту:</string>
+    <string name="monday">ПН</string>
+    <string name="Sunday">ВС</string>
+    <string name="friday">ПТ</string>
+    <string name="language">Язык</string>
+    <string name="saturday">СБ</string>
+    <string name="sleep_words">Пора идти спать!</string>
+    <string name="thursday">ЧТ</string>
+    <string name="tuesday">ВТ</string>
+    <string name="wednesday">СР</string>
 </resources>

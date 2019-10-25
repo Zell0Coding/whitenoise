@@ -11,4 +11,13 @@
     <string name="timing">Sincronización</string>
     <string name="days_of_week">Seleccionar días de la semana</string>
     <string name="support">Apoyo</string>
+    <string name="monday">LU</string>
+    <string name="Sunday">DO</string>
+    <string name="friday">VI</string>
+    <string name="language">Idioma</string>
+    <string name="saturday">SA</string>
+    <string name="sleep_words">¡Hora de ir a la cama!</string>
+    <string name="thursday">JU</string>
+    <string name="tuesday">MA</string>
+    <string name="wednesday">MI</string>
 </resources>

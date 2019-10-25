@@ -11,4 +11,13 @@
     <string name="timing">Pengaturan waktu</string>
     <string name="days_of_week">Pilih hari dalam seminggu</string>
     <string name="support">Dukungan</string>
+    <string name="monday">MO</string>
+    <string name="Sunday">SU</string>
+    <string name="friday">FR</string>
+    <string name="language">Bahasa</string>
+    <string name="saturday">SA</string>
+    <string name="sleep_words">Waktunya tidur!</string>
+    <string name="thursday">TH</string>
+    <string name="tuesday">TU</string>
+    <string name="wednesday">WE</string>
 </resources>

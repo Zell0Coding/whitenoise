@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -150,55 +151,55 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.white_noise:
-                Sound white_sound = new Sound("white_noise",Utill.WHITE_NOISE_IMG,Utill.WHITE_NOISE,0.5f,true,0);
+                Sound white_sound = new Sound("white_noise",Utill.WHITE_NOISE_IMG,Utill.WHITE_NOISE,Utill.WHITE_NOISE_DUPLICATE,0.5f,true,0);
                 if(!mMusicAdapter.getItem(white_sound)) whiteNoiseIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(white_sound,false);
                 updateStateAllButtonIcon();
                 break;
             case R.id.rain:
-                Sound rain = new Sound("rain",Utill.RAIN_IMG,Utill.RAIN,0.5f,true,0);
+                Sound rain = new Sound("rain",Utill.RAIN_IMG,Utill.RAIN,Utill.RAIN_DUPLICATE,0.5f,true,0);
                 if(!mMusicAdapter.getItem(rain)) rainIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(rain,false);
                 updateStateAllButtonIcon();
                 break;
             case R.id.thunder:
-                Sound thunder = new Sound("thunder",Utill.THUNDER_IMG,Utill.THUNDER,0.5f,true,0);
+                Sound thunder = new Sound("thunder",Utill.THUNDER_IMG,Utill.THUNDER,Utill.THUNDER_DUPLICATE,0.5f,true,0);
                 if(!mMusicAdapter.getItem(thunder)) thunderIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(thunder,false);
                 updateStateAllButtonIcon();
                 break;
             case R.id.ocean:
-                Sound ocean = new Sound("ocean",Utill.OCEAN_IMG,Utill.OCEAN,0.5f,true,0);
+                Sound ocean = new Sound("ocean",Utill.OCEAN_IMG,Utill.OCEAN,Utill.OCEAN_DUPLICATE,0.5f,true,0);
                 if(!mMusicAdapter.getItem(ocean)) oceanIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(ocean,false);
                 updateStateAllButtonIcon();
                 break;
             case R.id.wind:
-                Sound wind = new Sound("wind",Utill.WIND_IMG,Utill.WIND,0.5f,true,0);
+                Sound wind = new Sound("wind",Utill.WIND_IMG,Utill.WIND,Utill.WIND_DUPLICATE,0.5f,true,0);
                 if(!mMusicAdapter.getItem(wind)) windIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(wind,false);
                 updateStateAllButtonIcon();
                 break;
             case R.id.river:
-                Sound river = new Sound("river",Utill.RIVER_IMG,Utill.RIVER,0.5f,true,0);
+                Sound river = new Sound("river",Utill.RIVER_IMG,Utill.RIVER,Utill.RIVER_DUPLICATE,0.5f,true,0);
                 if(!mMusicAdapter.getItem(river)) riverIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(river,false);
                 updateStateAllButtonIcon();
                 break;
             case R.id.fire:
-                Sound fire = new Sound("fire",Utill.FIRE_IMG,Utill.FIRE,0.5f,true,0);
+                Sound fire = new Sound("fire",Utill.FIRE_IMG,Utill.FIRE,Utill.FIRE_DUPLICATE,0.5f,true,0);
                 if(!mMusicAdapter.getItem(fire))  fireIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(fire,false);
                 updateStateAllButtonIcon();
                 break;
             case R.id.forest:
-                Sound forest = new Sound("forest",Utill.FOREST_IMG,Utill.FOREST,0.5f,true,0);
+                Sound forest = new Sound("forest",Utill.FOREST_IMG,Utill.FOREST,Utill.FOREST_DUPLICATE,0.5f,true,0);
                 if(!mMusicAdapter.getItem(forest)) forestIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(forest,false);
                 updateStateAllButtonIcon();
                 break;
             case R.id.night:
-                Sound night = new Sound("night",Utill.NIGHT_IMG,Utill.NIGHT,0.5f,true,0);
+                Sound night = new Sound("night",Utill.NIGHT_IMG,Utill.NIGHT,Utill.NIGHT,0.5f,true,0);
                 if(!mMusicAdapter.getItem(night)) nightIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(night,false);
                 updateStateAllButtonIcon();
@@ -226,6 +227,8 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
                 }
 
                 break;
+
+
         }
     }
     @Override

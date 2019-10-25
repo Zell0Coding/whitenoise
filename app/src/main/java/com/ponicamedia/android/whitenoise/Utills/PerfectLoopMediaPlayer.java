@@ -1,10 +1,13 @@
 package com.ponicamedia.android.whitenoise.Utills;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.logging.Handler;
 
 /**
  * Created by viksaaskool on 13-04-2017.
@@ -220,6 +223,5 @@ public class PerfectLoopMediaPlayer {
         }
 
     }
-
 }
 

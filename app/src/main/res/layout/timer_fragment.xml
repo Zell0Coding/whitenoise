@@ -27,7 +27,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="35dp"
-                android:background="@drawable/button_play_circle"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/timer_add"
                 android:src="@drawable/ic_timer">
 
             </ImageButton>
@@ -60,7 +61,7 @@
         android:fontFamily="@font/roboto_bold"
         android:text="00"
         android:textColor="@color/colorSelected"
-
+        android:layout_marginBottom="20dp"
         android:textSize="45sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -75,7 +76,7 @@
         android:fontFamily="@font/roboto_bold"
         android:text=":"
         android:textColor="@color/colorSelected"
-
+        android:layout_marginBottom="20dp"
         android:textSize="45sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/coordinator_layout"
@@ -88,7 +89,7 @@
         android:id="@+id/timer_minute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_marginBottom="20dp"
         android:fontFamily="@font/roboto_bold"
         android:text="15"
         android:textColor="@color/colorSelected"

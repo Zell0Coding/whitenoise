@@ -10,15 +10,24 @@ public abstract class Utill {
 
 
     // ---------------------  ЗВУКИ --------------------------
-    public static final int WHITE_NOISE = R.raw.white_noise;
-    public static final int RAIN = R.raw.rain_ambience;
-    public static final int THUNDER = R.raw.rolling_thunder;
+    public static final int WHITE_NOISE = R.raw.whitenoise;
+    public static final int WHITE_NOISE_DUPLICATE = R.raw.whitenoise_duplicate;
+    public static final int RAIN = R.raw.rain;
+    public static final int RAIN_DUPLICATE = R.raw.rain_duplicate;
+    public static final int THUNDER = R.raw.thunder;
+    public static final int THUNDER_DUPLICATE = R.raw.thunder_duplicate;
     public static final int OCEAN = R.raw.ocean;
+    public static final int OCEAN_DUPLICATE = R.raw.ocean_duplicate;
     public static final int WIND = R.raw.wind;
+    public static final int WIND_DUPLICATE = R.raw.wind_duplicate;
     public static final int RIVER = R.raw.river;
+    public static final int RIVER_DUPLICATE = R.raw.river_duplicate;
     public static final int FIRE = R.raw.fire;
-    public static final int FOREST = R.raw.forest_birds;
-    public static final int NIGHT = R.raw.quiet_night;
+    public static final int FIRE_DUPLICATE = R.raw.fire_duplicate;
+    public static final int FOREST = R.raw.forest;
+    public static final int FOREST_DUPLICATE = R.raw.forest_duplicate;
+    public static final int NIGHT = R.raw.night;
+    public static final int NIGHT_DUPLICATE = R.raw.night_duplicate;
     // -------------------------------------------------------
 
     // -------------------- КАРТИНКИ -------------------------

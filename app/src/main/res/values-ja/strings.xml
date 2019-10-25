@@ -11,4 +11,13 @@
     <string name="timing">タイミング</string>
     <string name="days_of_week">曜日を選択</string>
     <string name="support">サポートする</string>
+    <string name="monday">MO</string>
+    <string name="Sunday">SU</string>
+    <string name="friday">FR</string>
+    <string name="language">言語</string>
+    <string name="saturday">SA</string>
+    <string name="sleep_words">寝る時間！</string>
+    <string name="thursday">TH</string>
+    <string name="tuesday">TU</string>
+    <string name="wednesday">WE</string>
 </resources>

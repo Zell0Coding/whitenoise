@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="7dp"
-                android:text="Пн"
+                android:text="@string/monday"
                 android:textAllCaps="false"
                 style="@style/DayButtonNonInclude"
                 android:layout_weight="1">
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="7dp"
                 android:layout_marginLeft="7dp"
-                android:text="Вт"
+                android:text="@string/tuesday"
                 android:textAllCaps="false"
                 style="@style/DayButtonNonInclude"
                 android:layout_weight="1">
@@ -115,7 +115,7 @@
                 android:layout_marginRight="7dp"
                 android:layout_marginLeft="7dp"
                 style="@style/DayButtonNonInclude"
-                android:text="Ср"
+                android:text="@string/wednesday"
                 android:textAllCaps="false"
                 android:layout_weight="1">
 
@@ -127,7 +127,7 @@
                 android:layout_marginRight="7dp"
                 android:layout_marginLeft="7dp"
                 style="@style/DayButtonNonInclude"
-                android:text="Чт"
+                android:text="@string/thursday"
                 android:textAllCaps="false"
                 android:layout_weight="1">
 
@@ -139,7 +139,7 @@
                 android:layout_marginRight="7dp"
                 android:layout_marginLeft="7dp"
                 style="@style/DayButtonNonInclude"
-                android:text="Пт"
+                android:text="@string/friday"
                 android:textAllCaps="false"
                 android:layout_weight="1">
 
@@ -151,7 +151,7 @@
                 android:layout_marginRight="7dp"
                 android:layout_marginLeft="7dp"
                 style="@style/DayButtonNonInclude"
-                android:text="Сб"
+                android:text="@string/saturday"
                 android:textAllCaps="false"
                 android:layout_weight="1">
 
@@ -163,7 +163,7 @@
                 android:layout_marginStart="7dp"
                 android:layout_marginEnd="15dp"
                 style="@style/DayButtonNonInclude"
-                android:text="Вс"
+                android:text="@string/Sunday"
                 android:textAllCaps="false"
                 android:layout_weight="1">
 

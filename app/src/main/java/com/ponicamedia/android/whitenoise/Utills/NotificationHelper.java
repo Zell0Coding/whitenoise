@@ -49,9 +49,10 @@ public class NotificationHelper extends ContextWrapper {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
+        String text =getString(R.string.sleep_words);
+
         return new NotificationCompat.Builder(getApplicationContext(), channelID)
-                .setContentTitle("Пора спать!")
-                .setContentText("Пришло время спатки")
+                .setContentTitle(text)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
                 .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND)

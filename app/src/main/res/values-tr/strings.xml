@@ -11,4 +11,13 @@
     <string name="timing">Zamanlama</string>
     <string name="days_of_week">Haftanın günlerini seçin</string>
     <string name="support">Destek</string>
+    <string name="monday">MO</string>
+    <string name="Sunday">SU</string>
+    <string name="friday">FR</string>
+    <string name="language">Dil</string>
+    <string name="saturday">SA</string>
+    <string name="sleep_words">Yatma zamanı!</string>
+    <string name="thursday">TH</string>
+    <string name="tuesday">TU</string>
+    <string name="wednesday">WE</string>
 </resources>
