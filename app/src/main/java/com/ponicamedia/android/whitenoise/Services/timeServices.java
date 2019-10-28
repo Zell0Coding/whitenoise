@@ -4,11 +4,15 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.ponicamedia.android.whitenoise.Models.Sound;
 import com.ponicamedia.android.whitenoise.Models.SoundContainer;
 import com.ponicamedia.android.whitenoise.Models.SoundListiner;
 import com.ponicamedia.android.whitenoise.Models.TimerContainer;
@@ -16,15 +20,22 @@ import com.ponicamedia.android.whitenoise.Utills.Manager;
 import com.ponicamedia.android.whitenoise.Utills.StorageManager;
 import com.ponicamedia.android.whitenoise.Utills.Utill;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class timeServices extends Service {
 
     private Manager mManager;
-    private CountDownTimer timer;
+    //private CountDownTimer timer;
     private PendingIntent mPendingIntent;
+
+    private Timer mTimer;
 
     private final int STOPTIMER = 100;
     private final int BREAK = 0;
+
+    private  long millisecund;
     private int state;
 
     public IBinder onBind(Intent arg0) {
@@ -51,23 +62,36 @@ public class timeServices extends Service {
     private void startTimer(){
 
 
-        int minute = (mManager.getCurrent_timer_hour()*60) + mManager.getCurrent_timer_minute();
-        final long millisecund = minute * 60 * 1000;
+        long minute = (mManager.getCurrent_timer_hour()*60) + mManager.getCurrent_timer_minute();
+        millisecund = minute * 60;
 
         Log.d("millisecund",millisecund+"");
-        timer = new CountDownTimer(millisecund,1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                Log.d("осталось",millisUntilFinished/1000+"");
+
+        mTimer = new Timer();
+        mTimer.scheduleAtFixedRate(new mainTask(),0,1000);
+
+
+    }
+
+    private class mainTask extends TimerTask
+    {
+        public void run()
+        {
+            if(millisecund>0){
                 try{
+                    millisecund = millisecund - 1;
+                    Log.d("Осталось", "" + millisecund);
+
                     Intent intent = new Intent();
+                    long h = ((millisecund)/3600);
+                    long m = ((millisecund)%3600)/60;
+                    long s = ((millisecund)%3600)%60;
 
-                    long h = ((millisUntilFinished/1000)/3600);
-                    long m = ((millisUntilFinished/1000)%3600)/60;
-                    long s = ((millisUntilFinished/1000)%3600)%60;
+                    mManager.setCurrent_timer_hour(h);
+                    mManager.setCurrent_timer_minute(m);
 
-                    String hours = (h<9)?"0"+ h : "" + h;
-                    String minute = (m<9)?"0"+ m : "" + m;
+                    String hours = (h<109)?"0"+ h : "" + h;
+                    String minute = (m<10)?"0"+ m : "" + m;
                     int s_;
 
                     if(s%2==0){
@@ -81,23 +105,21 @@ public class timeServices extends Service {
                     intent.putExtra("dots",s_);
 
                     mPendingIntent.send(getApplicationContext(),200,intent);
+
                 }catch (PendingIntent.CanceledException e){
-                    Log.d("Закрыть","ERROR");
+                    e.printStackTrace();
                 }
-
-            }
-
-            @Override
-            public void onFinish() {
+            }else{
                 state = STOPTIMER;
                 loadSound();
                 loadTimer();
+                mManager.setTimerEnabled(false);
                 stopSelf();
-                getApplicationContext().stopService(new Intent(getApplicationContext(),musicServices.class));
             }
-        }.start();
 
+        }
     }
+
 
     private void loadSound(){
         try {
@@ -113,7 +135,7 @@ public class timeServices extends Service {
     private void saveSound(SoundContainer soundContainer){
 
         SoundListiner soundListiner = mManager.getSoundListiner();
-        soundListiner.stopAllSound();
+        soundListiner.stopAllSoundTimer();
 
         for(int i = 1; i < soundContainer.mSoundList.size();i++){
             soundContainer.mSoundList.get(i).setEnabled(false);
@@ -157,19 +179,31 @@ public class timeServices extends Service {
     }
     @Override
     public void onDestroy() {
-        timer.cancel();
-        Log.d("Закрыть","закрыть");
-        try{
-            mPendingIntent.send(state);
-        }catch (PendingIntent.CanceledException e){
 
+        if(!mManager.isTimerEnabled()){
+            mTimer.cancel();
+            Log.d("Закрыть","закрыть");
+            try{
+                mPendingIntent.send(state);
+            }catch (PendingIntent.CanceledException e){
+
+            }
+
+        }else{
+
+            Intent broadcastIntent = new Intent();
+            broadcastIntent.putExtra("PARAM_INTENT",mPendingIntent);
+            sendBroadcast(broadcastIntent);
         }
-
         super.onDestroy();
     }
 
     @Override
     public void onLowMemory() {
+
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.putExtra("PARAM_INTENT",mPendingIntent);
+        sendBroadcast(broadcastIntent);
 
     }
 }

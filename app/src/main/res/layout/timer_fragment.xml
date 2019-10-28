@@ -28,8 +28,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="35dp"
                 android:background="@android:color/transparent"
-                app:srcCompat="@drawable/timer_add"
-                android:src="@drawable/ic_timer">
+                app:srcCompat="@drawable/timer_add">
 
             </ImageButton>
 

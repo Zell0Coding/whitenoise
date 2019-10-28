@@ -36,6 +36,7 @@ public class PersistantStorage {
     }
 
     public static boolean getProperty(String name){
+
         if(settings==null) init();
 
         Log.d("FIRST",settings.getBoolean(name,false) + "");

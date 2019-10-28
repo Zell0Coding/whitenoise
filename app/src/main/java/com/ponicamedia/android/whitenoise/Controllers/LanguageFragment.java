@@ -33,7 +33,10 @@ public class LanguageFragment extends Fragment implements i_helper.i_language {
 
     public interface selectLanguage{
         void select();
+        void restartSettings();
     }
+
+
     public selectLanguage select;
 
     private RecyclerView mRecyclerView;
@@ -54,6 +57,11 @@ public class LanguageFragment extends Fragment implements i_helper.i_language {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mManager = Manager.getInstance();
+        try {
+            getActivity().getActionBar().setTitle(R.string.settings);
+        }catch (NullPointerException e){
+
+        }
     }
 
     @Nullable
@@ -99,9 +107,6 @@ public class LanguageFragment extends Fragment implements i_helper.i_language {
         }
         resources.updateConfiguration(configuration,displayMetrics);
         select.select();
-        getFragmentManager().beginTransaction()
-                .add(R.id.container, new LanguageFragment())
-                .remove(this)
-                .commit();
+        select.restartSettings();
     }
 }

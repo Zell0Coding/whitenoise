@@ -1,5 +1,7 @@
 package com.ponicamedia.android.whitenoise.Utills;
 
+import android.content.Context;
+
 import com.ponicamedia.android.whitenoise.Models.SoundListiner;
 import com.google.android.gms.ads.InterstitialAd;
 
@@ -10,20 +12,33 @@ public class Manager {
 
     private int width;
 
-    private int current_timer_hour;
-    private int current_timer_minute;
+    private long current_timer_hour;
+    private long current_timer_minute;
+    private boolean timerEnabled;
 
     private InterstitialAd mMInterstitialAd;
 
     private String currentLang;
 
-    private Manager(){mSoundListiner = new SoundListiner();}
+    private Manager(){ }
+
+    public void createListiner(Context context){
+        mSoundListiner = SoundListiner.create(context);
+    }
 
     public static Manager getInstance(){ // #3
         if(instance == null){		//если объект еще не создан
             instance = new Manager();	//создать новый объект
         }
         return instance;		// вернуть ранее созданный объект
+    }
+
+    public boolean isTimerEnabled() {
+        return timerEnabled;
+    }
+
+    public void setTimerEnabled(boolean timerEnabled) {
+        this.timerEnabled = timerEnabled;
     }
 
     public String getCurrentLang() {
@@ -53,16 +68,16 @@ public class Manager {
         this.width = width;
     }
 
-    public int getCurrent_timer_hour() {
+    public long getCurrent_timer_hour() {
         return current_timer_hour;
     }
-    public void setCurrent_timer_hour(int current_timer_hour) {
+    public void setCurrent_timer_hour(long current_timer_hour) {
         this.current_timer_hour = current_timer_hour;
     }
-    public int getCurrent_timer_minute() {
+    public long getCurrent_timer_minute() {
         return current_timer_minute;
     }
-    public void setCurrent_timer_minute(int current_timer_minute) {
+    public void setCurrent_timer_minute(long current_timer_minute) {
         this.current_timer_minute = current_timer_minute;
     }
 }

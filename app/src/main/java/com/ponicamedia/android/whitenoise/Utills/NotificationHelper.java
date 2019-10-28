@@ -14,6 +14,7 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 
 import com.ponicamedia.android.whitenoise.Controllers.MainActivity;
+import com.ponicamedia.android.whitenoise.Controllers.SplashScreen;
 import com.ponicamedia.android.whitenoise.R;
 
 public class NotificationHelper extends ContextWrapper {
@@ -46,7 +47,7 @@ public class NotificationHelper extends ContextWrapper {
 
     public NotificationCompat.Builder getChannelNotification() {
 
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SplashScreen.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         String text =getString(R.string.sleep_words);
@@ -57,6 +58,6 @@ public class NotificationHelper extends ContextWrapper {
                 .setContentIntent(pendingIntent)
                 .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setSmallIcon(R.drawable.ic_timer);
+                .setSmallIcon(R.drawable.main);
     }
 }

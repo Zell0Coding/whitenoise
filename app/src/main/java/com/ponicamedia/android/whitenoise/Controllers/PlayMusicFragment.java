@@ -199,7 +199,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
                 updateStateAllButtonIcon();
                 break;
             case R.id.night:
-                Sound night = new Sound("night",Utill.NIGHT_IMG,Utill.NIGHT,Utill.NIGHT,0.5f,true,0);
+                Sound night = new Sound("night",Utill.NIGHT_IMG,Utill.NIGHT,Utill.NIGHT_DUPLICATE,0.5f,true,0);
                 if(!mMusicAdapter.getItem(night)) nightIndicator.setImageResource(R.drawable.ic_feather_pause_circle);
                 mMusicAdapter.addNewSong(night,false);
                 updateStateAllButtonIcon();
@@ -330,25 +330,31 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     // ----------------- SAVE SELECTED SOUND -----------------
 
     private void saveSound(){
-        List<Sound> sounds = mMusicAdapter.getItems();
-        SoundContainer soundContainer = new SoundContainer();
 
-        for(int i = 0; i < sounds.size();i++){
-            try {
-                Log.d("save-count",sounds.get(i).getName());
-            }catch (NullPointerException e){}
-            soundContainer.addSound(sounds.get(i));
-        }
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<Sound> sounds = mMusicAdapter.getItems();
+                SoundContainer soundContainer = new SoundContainer();
 
-        Gson gson = new Gson();
-        String json_data = gson.toJson(soundContainer);
-        StorageManager.writeToFile(Utill.SELECTED_SOUND,json_data,getContext());
+                for(int i = 0; i < sounds.size();i++){
+                    try {
+                        Log.d("save-count",sounds.get(i).getName());
+                    }catch (NullPointerException e){}
+                    soundContainer.addSound(sounds.get(i));
+                }
+
+                Gson gson = new Gson();
+                String json_data = gson.toJson(soundContainer);
+                StorageManager.writeToFile(Utill.SELECTED_SOUND,json_data,getContext());
+            }
+        });
+        thread.run();
     }
 
     // -------------------------------------------------------
 
     private SoundContainer loadSound(){
-
         try {
             String data = StorageManager.readFromFile(Utill.SELECTED_SOUND, getContext());
             GsonBuilder gsonBuilder = new GsonBuilder();

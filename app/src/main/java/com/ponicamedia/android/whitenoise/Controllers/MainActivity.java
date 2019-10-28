@@ -41,9 +41,14 @@ import com.ponicamedia.android.whitenoise.Utills.Utill;
 import com.ponicamedia.android.whitenoise.Services.musicServices;
 import com.ponicamedia.android.whitenoise.Utills.i_helper;
 
+import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements LanguageFragment.selectLanguage, i_helper.i_timer_servies{
+
+    public interface restartFragment{
+        void restartSettings();
+    }
 
     private Manager mManager;
     private ActionBar mActionBar;
@@ -55,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mManager = Manager.getInstance();
-        mManager.getSoundListiner().setContext(getApplicationContext());
+        mManager.createListiner(getApplicationContext());
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -65,13 +70,24 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
         setSupportActionBar(mActionBarToolbar);
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowTitleEnabled(false);
-        addFragment();
         setSettings();
         Intent sound = new Intent(getApplicationContext(), musicServices.class );
+
         startService(sound);
         initialFirebase();
-        startAd();
 
+        checkHoursGone();
+
+        addFragment();
+
+
+    }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        checkHoursGone();
     }
 
     @Override
@@ -209,13 +225,48 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
 
     }
 
-    private void startAd(){
+    private void checkHoursGone(){
+
+            PersistantStorage.init(getApplicationContext());
+            String date = PersistantStorage.getPropertyString("LASTADS");
+
+            if(date==null){
+
+                Date date1 = new Date();
+                date =  String.valueOf(date1.getTime());
+                PersistantStorage.addProperty("LASTADS",date);
+                Log.d("DATE",date1.getTime()+"");
+                startAd(date);
+
+            }else{
+                try{
+
+                    long firstDate = Long.parseLong(date);
+                    Date date2 = new Date();
+
+                    long between = date2.getTime() - firstDate;
+                    Log.d("ПРОШЛО",between + "");
+                    if( between > 18000000 ){
+                        date = String.valueOf(date2.getTime());
+                        startAd(date);
+                    }
+
+                }catch (NullPointerException e){
+                    e.printStackTrace();
+                }
+
+            }
+
+    }
+
+    private void startAd(final String date){
 
         final InterstitialAd mInterstitialAd = mManager.getMInterstitialAd();
 
 
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
+            PersistantStorage.addProperty("LASTADS",date);
         } else {
 
 
@@ -225,12 +276,13 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
 
                     if (mInterstitialAd.isLoaded()) {
                         mInterstitialAd.show();
+                        PersistantStorage.addProperty("LASTADS",date);
                     }else{
                         Log.d("TAG","НЕГОТОВО");
                     }
 
                 }
-            }, 3000); //specify the number of milliseconds
+            }, 5000); //specify the number of milliseconds
 
 
         }
@@ -244,26 +296,23 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
 
     private void addFragment(){
 
-        PersistantStorage.init(getApplicationContext());
-        boolean isFirst = PersistantStorage.getProperty("first_start");
-        if(!isFirst){
-            addFragment(Utill.SETTINGS);
-            PersistantStorage.addProperty("first_start",true);
-        }else{
-            addFragment(Utill.MUSIC_FRAGMENT);
-        }
+        addFragment(Utill.MUSIC_FRAGMENT);
 
     }
 
     @Override
     public void startTimer(Timer timer) {
+
+        stopTimer();
+
         mManager.setCurrent_timer_hour(timer.getHours());
         mManager.setCurrent_timer_minute(timer.getMinute());
         Log.d("TIMER","таймер включен");
 
         Intent intent = new Intent(getApplicationContext(), timeServices.class);
-        PendingIntent pendingIntent = createPendingResult(0,intent,0);
+        PendingIntent pendingIntent = createPendingResult(0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
         intent.putExtra("PARAM_INTENT", pendingIntent);
+        mManager.setTimerEnabled(true);
         startService(intent);
 
     }
@@ -271,11 +320,17 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
     @Override
     public void stopTimer() {
         try{
+            mManager.setTimerEnabled(false);
             stopService(new Intent(this,timeServices.class));
             Log.d("TIMER","таймер отключен");
         }catch (NullPointerException e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void restartSettings() {
+        addFragment(Utill.SETTINGS);
     }
 
     @Override

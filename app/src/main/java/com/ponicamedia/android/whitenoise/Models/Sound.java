@@ -9,19 +9,39 @@ public class Sound {
     private int path_img;
     private int path_sound;
     private int path_sound_duplicate;
-    private int sound_sec = 0;
+    private int sound_sec;
     private float volume;
+    private float vol_for_fade;
     private boolean enabled;
 
+    public Sound(Sound sound){
+        this.name = sound.name;
+        this.path_img = sound.path_img;
+        this.volume = sound.volume;
+        this.enabled = sound.enabled;
+        this.path_sound = sound.path_sound;
+        this.path_sound_duplicate = sound.path_sound_duplicate;
+        this.sound_sec = sound.sound_sec;
+        this.vol_for_fade = sound.vol_for_fade;
+    }
 
     public Sound(String _name,int _path_img,int _path_sound, int path_sound_duplicate, float _volume, boolean _enable, int _sound_sec){
         this.name = _name;
         this.path_img = _path_img;
         this.volume = _volume;
+        vol_for_fade = _volume;
         this.enabled = _enable;
         this.path_sound = _path_sound;
         this.path_sound_duplicate = path_sound_duplicate;
         this.sound_sec = _sound_sec;
+    }
+
+    public float getVol_for_fade() {
+        return vol_for_fade;
+    }
+
+    public void setVol_for_fade(float vol_for_fade) {
+        this.vol_for_fade = vol_for_fade;
     }
 
     public int getPath_sound_duplicate() {
@@ -70,6 +90,7 @@ public class Sound {
 
     public void setVolume(float volume) {
         this.volume = volume;
+        this.vol_for_fade = volume;
     }
 
     public boolean isEnabled() {
