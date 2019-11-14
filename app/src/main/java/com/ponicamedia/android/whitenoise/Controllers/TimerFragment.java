@@ -132,6 +132,8 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
     @Override
     public void enableTimer(Timer timer) {
 
+        disableTimer();
+
         services.startTimer(timer);
         timerTextHours.setVisibility(View.VISIBLE);
         timerTextDots.setVisibility(View.VISIBLE);
@@ -191,7 +193,7 @@ public class TimerFragment extends Fragment implements View.OnClickListener, i_h
 
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 TimerAddFragment timerAddFragmen = new TimerAddFragment();
-                fragmentTransaction.replace(R.id.container,timerAddFragmen);
+                fragmentTransaction.replace(R.id.container,timerAddFragmen,"addfragment");
                 fragmentTransaction.addToBackStack("timer_fragment");
                 fragmentTransaction.commit();
 

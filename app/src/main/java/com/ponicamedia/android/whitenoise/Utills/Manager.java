@@ -33,6 +33,12 @@ public class Manager {
         return instance;		// вернуть ранее созданный объект
     }
 
+    public static void deleteManager(){
+        if(instance != null){
+            instance = null;
+        }
+    }
+
     public boolean isTimerEnabled() {
         return timerEnabled;
     }

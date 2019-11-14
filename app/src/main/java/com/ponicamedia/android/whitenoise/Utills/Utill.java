@@ -59,4 +59,6 @@ public abstract class Utill {
     public static final String ASLEEP = "asleep";
     // -------------------------------------------------------
 
+    public static final String API_METRIKA = "e1a03adf-86e2-41f7-a195-89af282ea5a6";
+
 }

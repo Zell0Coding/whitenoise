@@ -1,5 +1,6 @@
 package com.ponicamedia.android.whitenoise.Adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -172,12 +173,16 @@ public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (position==0)
             return;
 
-        Sound sound = sounds.get(position);
-        sounds.remove(position);
-        sound_helper.deleteSound(sound);
-        update.update(sound.getName(),false);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, sounds.size());
+        try{
+            Sound sound = sounds.get(position);
+            sounds.remove(position);
+            sound_helper.deleteSound(sound);
+            update.update(sound.getName(),false);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, sounds.size());
+        }catch (NullPointerException e){
+
+        }
     }
 
     public boolean getItem(Sound sound){
@@ -198,17 +203,20 @@ public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         boolean include = false;
 
         for(int i = 1; i < sounds.size();i++){
+            Log.d("NAME",sounds.get(i).getName() + " " + _sound.getName());
             if(sounds.get(i).getName().equals(_sound.getName())){
-
-                current_id = i;
                 include = true;
+                current_id = i;
+                Log.d("NAME",sounds.get(i).getName() + "== " + _sound.getName());
                 break;
             }
         }
         if(!include){
             sounds.add(_sound);
             sound_helper.addSound(_sound, reCreate);
-            notifyItemChanged(sounds.size()-1);
+            //notifyItemChanged(current_id);
+            notifyDataSetChanged();
+
             return;
         }else{
             if(sounds.get(current_id).isEnabled()){

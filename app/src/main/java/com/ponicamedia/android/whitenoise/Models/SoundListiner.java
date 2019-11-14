@@ -5,6 +5,8 @@ import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.util.Log;
 
+import androidx.core.math.MathUtils;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +53,7 @@ public class SoundListiner  {
                Sound mainSound = new Sound(_sound);
                Sound duplicateSound = new Sound(_sound);
 
-               mainSound.setSound_sec(1000);
+               mainSound.setSound_sec(10000);
                duplicateSound.setSound_sec(0);
 
                soundListiner.put(mainSound,main);
@@ -92,7 +94,7 @@ public class SoundListiner  {
         });
         thread.start();
     }
-    public void stopAllSoundTimer(){
+    /*public void stopAllSoundTimer(){
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -101,7 +103,7 @@ public class SoundListiner  {
             }
         });
         thread.start();
-    }
+    }*/
     public void stopAllSound(){
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -151,13 +153,14 @@ public class SoundListiner  {
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
-                    mediaPlayer.seekTo(1000);
+                    mediaPlayer.seekTo(10000);
                     if(_sound.isEnabled()){
                         mediaPlayer.start();
                     }
                 }
             });
             mediaPlayer.prepareAsync();
+            afd.close();
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -183,6 +186,7 @@ public class SoundListiner  {
                 }
             });
             mediaPlayer.prepareAsync();
+            afd.close();
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -213,6 +217,7 @@ public class SoundListiner  {
         soundListiner.remove(remove_this);
     }
     private void deleteSoundDuplicate(Sound _sound){
+
         Sound remove_this = null;
 
         for(Map.Entry<Sound,MediaPlayer> entry : soundListinerDiplacite.entrySet()){
@@ -238,9 +243,9 @@ public class SoundListiner  {
     private void playMainSound(Sound _sound){
         for (Map.Entry<Sound,MediaPlayer> entry : soundListiner.entrySet()){
             if(entry.getKey().getName().equals(_sound.getName())){
-                entry.getValue().seekTo(entry.getKey().getSound_sec());
-                entry.getValue().setVolume(entry.getKey().getVolume(),entry.getKey().getVolume());
-                entry.getKey().setVol_for_fade(entry.getKey().getVolume());
+                //entry.getValue().seekTo(entry.getKey().getSound_sec());
+                //entry.getValue().setVolume(entry.getKey().getVolume(),entry.getKey().getVolume());
+                //entry.getKey().setVol_for_fade(entry.getKey().getVolume());
                 entry.getValue().start();
                 entry.getKey().setEnabled(true);
             }
@@ -249,9 +254,9 @@ public class SoundListiner  {
     private void playDuplicateSound(Sound _sound){
         for (Map.Entry<Sound,MediaPlayer> entry : soundListinerDiplacite.entrySet()){
             if(entry.getKey().getName().equals(_sound.getName())){
-                entry.getValue().seekTo(entry.getKey().getSound_sec());
-                entry.getValue().setVolume(entry.getKey().getVolume(),entry.getKey().getVolume());
-                entry.getKey().setVol_for_fade(entry.getKey().getVolume());
+                //entry.getValue().seekTo(entry.getKey().getSound_sec());
+                //entry.getValue().setVolume(entry.getKey().getVolume(),entry.getKey().getVolume());
+                //entry.getKey().setVol_for_fade(entry.getKey().getVolume());
                 entry.getValue().start();
                 entry.getKey().setEnabled(true);
             }
@@ -268,7 +273,7 @@ public class SoundListiner  {
         for (Map.Entry<Sound,MediaPlayer> entry : soundListiner.entrySet()){
             if(entry.getKey().getName().equals(_sound.getName())){
 
-                entry.getKey().setSound_sec(entry.getValue().getCurrentPosition());
+                //entry.getKey().setSound_sec(entry.getValue().getCurrentPosition());
                 entry.getValue().pause();
                 entry.getKey().setEnabled(false);
 
@@ -279,7 +284,7 @@ public class SoundListiner  {
         for (Map.Entry<Sound,MediaPlayer> entry : soundListinerDiplacite.entrySet()){
             if(entry.getKey().getName().equals(_sound.getName())){
 
-                entry.getKey().setSound_sec(entry.getValue().getCurrentPosition());
+                //entry.getKey().setSound_sec(entry.getValue().getCurrentPosition());
                 entry.getValue().pause();
                 entry.getKey().setEnabled(false);
 
@@ -293,13 +298,13 @@ public class SoundListiner  {
      *
      */
 
-    private void  stopAllMainSoundTimer(){
+    /*private void  stopAllMainSoundTimer(){
 
         for (Map.Entry<Sound,MediaPlayer> entry: soundListiner.entrySet())
         {
             /*entry.getKey().setSound_sec(entry.getValue().getCurrentPosition());
             entry.getValue().pause();
-            entry.getKey().setEnabled(false);*/
+            entry.getKey().setEnabled(false);
             fadeOutSoundMain(entry.getKey());
         }
 
@@ -310,18 +315,18 @@ public class SoundListiner  {
         {
             /*entry.getKey().setSound_sec(entry.getValue().getCurrentPosition());
             entry.getValue().pause();
-            entry.getKey().setEnabled(false);*/
+            entry.getKey().setEnabled(false);
             fadeOutSoundDuplicate(entry.getKey());
 
         }
 
-    }
+    }*/
 
     private void  stopAllMainSound(){
 
         for (Map.Entry<Sound,MediaPlayer> entry: soundListiner.entrySet())
         {
-            entry.getKey().setSound_sec(entry.getValue().getCurrentPosition());
+            //entry.getKey().setSound_sec(entry.getValue().getCurrentPosition());
             entry.getValue().pause();
             entry.getKey().setEnabled(false);
 
@@ -332,7 +337,7 @@ public class SoundListiner  {
 
         for (Map.Entry<Sound,MediaPlayer> entry: soundListinerDiplacite.entrySet())
         {
-            entry.getKey().setSound_sec(entry.getValue().getCurrentPosition());
+            //entry.getKey().setSound_sec(entry.getValue().getCurrentPosition());
             entry.getValue().pause();
             entry.getKey().setEnabled(false);
 
@@ -340,7 +345,7 @@ public class SoundListiner  {
 
     }
 
-    private void fadeOutSoundMain(final Sound _sound){
+    /*private void fadeOutSoundMain(final Sound _sound){
 
         final MediaPlayer mediaPlayer = soundListiner.get(_sound);
         _sound.setSound_sec(mediaPlayer.getCurrentPosition());
@@ -374,25 +379,27 @@ public class SoundListiner  {
                     fadeAudio(_sound,mediaPlayer);
                 }else{
                     timer.cancel();
+
                 }
             }
         };
-        timer.schedule(timerTask, 0, 50);
+        timer.schedule(timerTask, 0, 10);
 
     }
     private void fadeAudio(Sound vol, MediaPlayer _sound){
 
-        Log.d("ТУТ",vol.getVol_for_fade()+"");
+        float nextVol = vol.getVol_for_fade()- (0.01f * vol.getVol_for_fade());
 
+        Log.d("ТУТ",nextVol+"");
 
-        if(vol.getVol_for_fade()-0.01f > 0){
-            _sound.setVolume(vol.getVol_for_fade()-0.01f,vol.getVol_for_fade()-0.01f);
-            vol.setVol_for_fade(vol.getVol_for_fade()-0.01f);
+        if(nextVol > 0.01f){
+            _sound.setVolume(nextVol,nextVol);
+            vol.setVol_for_fade(nextVol);
         }else{
             _sound.pause();
         }
 
-    }
+    }*/
 
     /*
      *
@@ -404,9 +411,9 @@ public class SoundListiner  {
 
         for (Map.Entry<Sound,MediaPlayer> entry: soundListiner.entrySet())
         {
-            entry.getValue().seekTo(entry.getKey().getSound_sec());
-            entry.getValue().setVolume(entry.getKey().getVolume(),entry.getKey().getVolume());
-            entry.getKey().setVol_for_fade(entry.getKey().getVolume());
+            //entry.getValue().seekTo(entry.getKey().getSound_sec());
+            //entry.getValue().setVolume(entry.getKey().getVolume(),entry.getKey().getVolume());
+            //entry.getKey().setVol_for_fade(entry.getKey().getVolume());
             entry.getValue().start();
             entry.getKey().setEnabled(true);
         }
@@ -416,9 +423,9 @@ public class SoundListiner  {
 
         for (Map.Entry<Sound,MediaPlayer> entry: soundListinerDiplacite.entrySet())
         {
-            entry.getValue().seekTo(entry.getKey().getSound_sec());
-            entry.getValue().setVolume(entry.getKey().getVolume(),entry.getKey().getVolume());
-            entry.getKey().setVol_for_fade(entry.getKey().getVolume());
+            //entry.getValue().seekTo(entry.getKey().getSound_sec());
+            //entry.getValue().setVolume(entry.getKey().getVolume(),entry.getKey().getVolume());
+            //entry.getKey().setVol_for_fade(entry.getKey().getVolume());
             entry.getValue().start();
             entry.getKey().setEnabled(true);
         }

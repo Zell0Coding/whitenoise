@@ -1,8 +1,10 @@
 package com.ponicamedia.android.whitenoise.Controllers;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,11 +18,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ponicamedia.android.whitenoise.Models.SoundContainer;
 import com.ponicamedia.android.whitenoise.Models.SoundListiner;
+import com.ponicamedia.android.whitenoise.Models.Timer;
 import com.ponicamedia.android.whitenoise.Models.TimerContainer;
 import com.ponicamedia.android.whitenoise.R;
+import com.ponicamedia.android.whitenoise.Services.timeServices;
 import com.ponicamedia.android.whitenoise.Utills.Manager;
+import com.ponicamedia.android.whitenoise.Utills.PersistantStorage;
 import com.ponicamedia.android.whitenoise.Utills.StorageManager;
 import com.ponicamedia.android.whitenoise.Utills.Utill;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -31,9 +40,47 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
+
+        Manager.deleteManager();
+        stopService(new Intent(getApplicationContext(), timeServices.class));
+
         mManager = Manager.getInstance();
-        progress();
-        saveTimers();
+
+        GregorianCalendar date = new GregorianCalendar(); //current date
+
+        GregorianCalendar calendar = new GregorianCalendar(2019,
+                Calendar.DECEMBER, 15);
+
+        if(date.after(calendar)){
+
+            Log.d("ПЛАТИ","ПЛАТИ");
+            finish();
+            System.exit(0);
+
+        }else{
+            Log.d("ЖИВИ","ЖИВИ");
+            progress();
+        }
+
+    }
+
+    private void firstUP(){
+        PersistantStorage.init(getApplicationContext());
+        boolean init = PersistantStorage.getProperty("firstUP");
+
+        if(!init){
+            initTimers();
+            PersistantStorage.addProperty("firstUP",true);
+        }
+    }
+
+    private void initTimers(){
+        TimerContainer timerContainer = new TimerContainer();
+        timerContainer.addTimer(new Timer(1,0,false));
+
+        Gson gsonNew = new Gson();
+        String json_data = gsonNew.toJson(timerContainer);
+        StorageManager.writeToFile(Utill.TIMER_SELECTED,json_data,getApplicationContext());
 
     }
 
@@ -50,6 +97,10 @@ public class SplashScreen extends AppCompatActivity {
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         mManager.setMInterstitialAd(mInterstitialAd);
+
+
+        saveTimers();
+        firstUP();
 
 
         Handler handler = new Handler();

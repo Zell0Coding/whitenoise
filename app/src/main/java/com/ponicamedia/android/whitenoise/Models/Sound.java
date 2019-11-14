@@ -1,7 +1,4 @@
 package com.ponicamedia.android.whitenoise.Models;
-
-import java.io.Serializable;
-
 public class Sound {
 
 
@@ -13,6 +10,8 @@ public class Sound {
     private float volume;
     private float vol_for_fade;
     private boolean enabled;
+
+
 
     public Sound(Sound sound){
         this.name = sound.name;

@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -40,15 +41,14 @@ import com.ponicamedia.android.whitenoise.Utills.StorageManager;
 import com.ponicamedia.android.whitenoise.Utills.Utill;
 import com.ponicamedia.android.whitenoise.Services.musicServices;
 import com.ponicamedia.android.whitenoise.Utills.i_helper;
+import com.yandex.metrica.YandexMetrica;
+import com.yandex.metrica.YandexMetricaConfig;
 
 import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements LanguageFragment.selectLanguage, i_helper.i_timer_servies{
 
-    public interface restartFragment{
-        void restartSettings();
-    }
 
     private Manager mManager;
     private ActionBar mActionBar;
@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
         Intent sound = new Intent(getApplicationContext(), musicServices.class );
 
         startService(sound);
+
         initialFirebase();
 
         checkHoursGone();
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
 
 
     }
+
 
 
     @Override
@@ -125,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
             case Utill.MUSIC_FRAGMENT:
                 PlayMusicFragment playMusicFragment = new PlayMusicFragment();
                 fragmentTransaction.replace(R.id.container,playMusicFragment,"music");
+                getSupportFragmentManager().beginTransaction().addToBackStack(null);
                 mActionBar.setDisplayHomeAsUpEnabled(false);
                 mActionBar.setDisplayShowHomeEnabled(false);
                 mActionBar.setDisplayShowTitleEnabled(false);
@@ -134,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
                 TimerFragment TimerFragment = new TimerFragment();
                 fragmentTransaction.replace(R.id.container,TimerFragment,"timer");
                 mActionBar.setDisplayHomeAsUpEnabled(true);
+                fragmentTransaction.addToBackStack(null);
                 mActionBar.setDisplayShowHomeEnabled(true);
                 mActionBar.setDisplayShowTitleEnabled(true);
                 mActionBar.setTitle(R.string.timer);
@@ -142,8 +146,9 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
             case Utill.SETTINGS:
 
                 LanguageFragment languageFragment = new LanguageFragment();
-                fragmentTransaction.replace(R.id.container,languageFragment);
+                fragmentTransaction.replace(R.id.container,languageFragment,"settings");
                 mActionBar.setDisplayHomeAsUpEnabled(true);
+                fragmentTransaction.addToBackStack(null);
                 mActionBar.setDisplayShowHomeEnabled(true);
                 mActionBar.setDisplayShowTitleEnabled(true);
                 mActionBar.setTitle(R.string.settings);
@@ -153,9 +158,10 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
             case Utill.SLEEP_MODE:
 
                 AsleepFragment asleepFragment = new AsleepFragment();
-                fragmentTransaction.replace(R.id.container,asleepFragment);
+                fragmentTransaction.replace(R.id.container,asleepFragment,"sleep");
                 mActionBar.setDisplayHomeAsUpEnabled(true);
                 mActionBar.setDisplayShowHomeEnabled(true);
+                fragmentTransaction.addToBackStack(null);
                 mActionBar.setDisplayShowTitleEnabled(true);
                 mActionBar.setTitle(R.string.sleeping_mode);
 
@@ -215,11 +221,15 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
     public void onBackPressed() {
 
         int count = getSupportFragmentManager().getBackStackEntryCount();
+        Fragment current = getSupportFragmentManager().findFragmentById(R.id.container); // пытаемся получить выбранный фрагмент
 
-        if (count == 0) {
+        if (count == 0 || current.getTag().equals(Utill.MUSIC_FRAGMENT)) {
+
             super.onBackPressed();
-            //additional code
-        } else {
+            finish();
+            System.exit(0);
+        }
+        else {
             getSupportFragmentManager().popBackStack();
         }
 
@@ -296,23 +306,27 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
 
     private void addFragment(){
 
-        addFragment(Utill.MUSIC_FRAGMENT);
+        PlayMusicFragment playMusicFragment = new PlayMusicFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container,playMusicFragment,"music");
+        fragmentTransaction.commit();
+        mActionBar.setDisplayHomeAsUpEnabled(false);
+        mActionBar.setDisplayShowHomeEnabled(false);
+        mActionBar.setDisplayShowTitleEnabled(false);
 
     }
 
     @Override
     public void startTimer(Timer timer) {
 
-        stopTimer();
-
-        mManager.setCurrent_timer_hour(timer.getHours());
-        mManager.setCurrent_timer_minute(timer.getMinute());
+        mManager.setCurrent_timer_hour(timer.getHours()); //УСТАНАВЛИВАЕМ СКОЛЬКО НУЖНО ЧАСОВ
+        mManager.setCurrent_timer_minute(timer.getMinute());  //УСТАНАВЛИВАЕМ СКОЛЬКО НУЖНО МИНУТ
+        mManager.setTimerEnabled(true);
         Log.d("TIMER","таймер включен");
 
         Intent intent = new Intent(getApplicationContext(), timeServices.class);
-        PendingIntent pendingIntent = createPendingResult(0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = createPendingResult(0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         intent.putExtra("PARAM_INTENT", pendingIntent);
-        mManager.setTimerEnabled(true);
         startService(intent);
 
     }
@@ -321,7 +335,7 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
     public void stopTimer() {
         try{
             mManager.setTimerEnabled(false);
-            stopService(new Intent(this,timeServices.class));
+            stopService(new Intent(getApplicationContext(),timeServices.class));
             Log.d("TIMER","таймер отключен");
         }catch (NullPointerException e){
             e.printStackTrace();
@@ -336,8 +350,29 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Fragment current = (Fragment) getSupportFragmentManager().findFragmentById(R.id.container);
-        if(resultCode==100){
+        Fragment current = getSupportFragmentManager().findFragmentById(R.id.container); // пытаемся получить выбранный фрагмент
+
+        /* ТАЙМЕР ОТРАБОТАН */
+        if(resultCode == 100 && current != null){
+            if(current.getTag().equals("music")){
+                getSupportFragmentManager().beginTransaction().remove(current).commit();
+                addFragment(Utill.MUSIC_FRAGMENT);
+            }else if(current.getTag().equals("timer")){
+                getSupportFragmentManager().beginTransaction().remove(current).commit();
+                addFragment(Utill.TIMER_FRAGMENT);
+            }
+
+            stopTimer();
+
+            /* ТАЙМЕР ОБНОВИТЬ */
+        }else if(resultCode == 200 &&current != null){
+            if(current.getTag().equals("timer")){
+                ((TimerFragment)current).updateTimer(data.getStringExtra("hours"),data.getStringExtra("minute"),data.getIntExtra("dots",0));
+            }
+        }
+
+
+        /*if(resultCode==100){
             //TODO:обновляем фрагмент
             if(current!=null){
                 try{
@@ -349,21 +384,27 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
                     }else if(current.getTag().equals("timer")){
                         addFragment(Utill.TIMER_FRAGMENT);
                     }
-                }catch (NullPointerException e){
 
+                    Toast.makeText(getApplicationContext(),"Timer stopped!!!",Toast.LENGTH_SHORT).show();
+
+                }catch (NullPointerException e){
+                    Toast.makeText(getApplicationContext(),"ERROR-2",Toast.LENGTH_SHORT).show();
                 }
             }
+            Toast.makeText(getApplicationContext(),"CODE-100",Toast.LENGTH_SHORT).show();
         }
-        if(resultCode == 200){
+        else if(resultCode == 200){
             if(current!=null){
                 try{
                     if(current.getTag().equals("timer")){
                         ((TimerFragment)current).updateTimer(data.getStringExtra("hours"),data.getStringExtra("minute"),data.getIntExtra("dots",0));
                     }
                 }catch (NullPointerException e){
-
+                    Toast.makeText(getApplicationContext(),"ERROR-3",Toast.LENGTH_SHORT).show();
                 }
             }
-        }
+        }else{
+            Toast.makeText(getApplicationContext(),"CODE-"+resultCode,Toast.LENGTH_SHORT).show();
+        }*/
     }
 }
