@@ -41,6 +41,26 @@ public abstract class Utill {
     public static final int FOREST_IMG = R.drawable.forest;
     public static final int NIGHT_IMG = R.drawable.night;
 
+    public static final int AIRPLANE = R.drawable.airplane;
+    public static final int BIRDS = R.drawable.birds;
+    public static final int BLISS = R.drawable.bliss;
+    public static final int BROWN_NOISE = R.drawable.brown_noise;
+    public static final int CAT = R.drawable.cat;
+    public static final int CITY = R.drawable.city;
+    public static final int DOLPHIN = R.drawable.dolphin;
+    public static final int FAN = R.drawable.fan;
+    public static final int HEART = R.drawable.heart;
+
+    public static final int OWL = R.drawable.owl;
+    public static final int PINK_NOISE = R.drawable.pink_noise;
+    public static final int SEAGULL = R.drawable.seagull;
+    public static final int STREET = R.drawable.street;
+    public static final int TRAIN = R.drawable.train;
+    public static final int UNDERWATER = R.drawable.underwater;
+    public static final int VINYL = R.drawable.vinyl;
+    public static final int WATERFALL = R.drawable.waterfall;
+    public static final int WOLF = R.drawable.wolf;
+
     public static final int RUSSIA =  R.drawable.icons8_russian_federation_96;
     public static final int ENGLISH = R.drawable.icons8_usa_96;
     public static final int DEUTSCH = R.drawable.icons8_germany_96;
@@ -51,6 +71,10 @@ public abstract class Utill {
     public static final int TURKISH = R.drawable.icons8_turkey_96;
     public static final int JAPANESE = R.drawable.icons8_japan_96;
     // -------------------------------------------------------
+
+    public static final int PLAY_INDICATOR = R.drawable.ic_outline_play_circle_filled_white;
+    public static final int PAUSE_INDICATOR = R.drawable.ic_feather_pause_circle;
+    public static final int CLOSE_INDICATOR = R.drawable.close;
 
     // --------------------- ФАЙЛЫ ---------------------------
     public static final String SELECTED_SOUND = "selected_sound";

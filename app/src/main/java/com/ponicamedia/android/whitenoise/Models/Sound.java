@@ -1,4 +1,8 @@
 package com.ponicamedia.android.whitenoise.Models;
+
+import android.widget.ImageButton;
+import android.widget.ImageView;
+
 public class Sound {
 
 
@@ -10,7 +14,26 @@ public class Sound {
     private float volume;
     private float vol_for_fade;
     private boolean enabled;
+    private boolean isPremium;
 
+    public ImageButton getButton() {
+        return button;
+    }
+
+    public void setButton(ImageButton button) {
+        this.button = button;
+    }
+
+    public ImageView getIndicator() {
+        return indicator;
+    }
+
+    public void setIndicator(ImageView indicator) {
+        this.indicator = indicator;
+    }
+
+    private ImageButton button;
+    private ImageView indicator;
 
 
     public Sound(Sound sound){
@@ -24,7 +47,7 @@ public class Sound {
         this.vol_for_fade = sound.vol_for_fade;
     }
 
-    public Sound(String _name,int _path_img,int _path_sound, int path_sound_duplicate, float _volume, boolean _enable, int _sound_sec){
+    public Sound(String _name,int _path_img,int _path_sound, int path_sound_duplicate, float _volume, boolean _enable, int _sound_sec, boolean isPremium){
         this.name = _name;
         this.path_img = _path_img;
         this.volume = _volume;
@@ -33,6 +56,7 @@ public class Sound {
         this.path_sound = _path_sound;
         this.path_sound_duplicate = path_sound_duplicate;
         this.sound_sec = _sound_sec;
+        this.isPremium = isPremium;
     }
 
     public float getVol_for_fade() {
@@ -49,6 +73,14 @@ public class Sound {
 
     public void setPath_sound_duplicate(int path_sound_duplicate) {
         this.path_sound_duplicate = path_sound_duplicate;
+    }
+
+    public boolean isPremium() {
+        return isPremium;
+    }
+
+    public void setPremium(boolean premium) {
+        isPremium = premium;
     }
 
     public int getPath_img() {

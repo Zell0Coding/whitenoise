@@ -9,6 +9,9 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
@@ -16,6 +19,7 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.ponicamedia.android.whitenoise.Models.CasheSounds;
 import com.ponicamedia.android.whitenoise.Models.SoundContainer;
 import com.ponicamedia.android.whitenoise.Models.SoundListiner;
 import com.ponicamedia.android.whitenoise.Models.Timer;
@@ -27,9 +31,14 @@ import com.ponicamedia.android.whitenoise.Utills.PersistantStorage;
 import com.ponicamedia.android.whitenoise.Utills.StorageManager;
 import com.ponicamedia.android.whitenoise.Utills.Utill;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -46,21 +55,32 @@ public class SplashScreen extends AppCompatActivity {
 
         mManager = Manager.getInstance();
 
-        GregorianCalendar date = new GregorianCalendar(); //current date
+        loadCasheMusic();
+        progress();
 
-        GregorianCalendar calendar = new GregorianCalendar(2019,
-                Calendar.DECEMBER, 15);
 
-        if(date.after(calendar)){
+        BillingClient billingClient = BillingClient.newBuilder(getApplicationContext())
+                .setListener(new PurchasesUpdatedListener() {
+                    @Override
+                    public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
+                        if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
+                            //сюда мы попадем когда будет осуществлена покупка
+                            mManager.setPremium(true);
+                        }
+                    }
+                })
+                .build();
 
-            Log.d("ПЛАТИ","ПЛАТИ");
-            finish();
-            System.exit(0);
+        Purchase.PurchasesResult subscriptionResult =
+                billingClient.queryPurchases(BillingClient.SkuType.SUBS);
+        int responseCode = billingClient.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS);
 
+        if(responseCode == BillingClient.BillingResponse.OK){
+            mManager.setPremium(true);
         }else{
-            Log.d("ЖИВИ","ЖИВИ");
-            progress();
+            mManager.setPremium(false);
         }
+
 
     }
 
@@ -137,9 +157,34 @@ public class SplashScreen extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-
     }
 
+    private void loadCasheMusic(){
+        String res = "";
+        try{
+            InputStream is = getAssets().open("songs.json");
+            InputStreamReader inputStreamReader = new InputStreamReader(is);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String tempStringJson = "";
+            StringBuilder stringBilder = new StringBuilder();
+            while ((tempStringJson = bufferedReader.readLine())!=null){
+                stringBilder.append(tempStringJson);
+            }
+
+            is.close();
+            res = stringBilder.toString();
+            Log.d("size",res.length()+"");
+
+
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            Gson gson = gsonBuilder.create();
+            CasheSounds casheSounds = gson.fromJson(res,CasheSounds.class);
+            mManager.setCasheSounds(casheSounds);
+
+        }catch (IOException e){
+
+        }
+
+    }
 
 }

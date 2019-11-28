@@ -2,6 +2,7 @@ package com.ponicamedia.android.whitenoise.Utills;
 
 import android.content.Context;
 
+import com.ponicamedia.android.whitenoise.Models.CasheSounds;
 import com.ponicamedia.android.whitenoise.Models.SoundListiner;
 import com.google.android.gms.ads.InterstitialAd;
 
@@ -14,9 +15,31 @@ public class Manager {
 
     private long current_timer_hour;
     private long current_timer_minute;
+
+    public CasheSounds getCasheSounds() {
+        return casheSounds;
+    }
+
+    public void setCasheSounds(CasheSounds casheSounds) {
+        this.casheSounds = casheSounds;
+    }
+
+    private CasheSounds casheSounds;
+
+
     private boolean timerEnabled;
 
     private InterstitialAd mMInterstitialAd;
+
+    public boolean isPremium() {
+        return isPremium;
+    }
+
+    public void setPremium(boolean premium) {
+        isPremium = premium;
+    }
+
+    private boolean isPremium;
 
     private String currentLang;
 

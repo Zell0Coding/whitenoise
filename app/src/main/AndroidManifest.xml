@@ -4,6 +4,7 @@
     package="com.ponicamedia.android.whitenoise">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="com.android.vending.BILLING"/>
 
     <application
         android:name=".Controllers.whitenoise"

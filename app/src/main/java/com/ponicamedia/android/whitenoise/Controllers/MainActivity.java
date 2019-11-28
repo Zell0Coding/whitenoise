@@ -26,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.billingclient.api.BillingClient;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
@@ -80,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
         checkHoursGone();
 
         addFragment();
-
 
     }
 
@@ -271,32 +271,28 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
 
     private void startAd(final String date){
 
-        final InterstitialAd mInterstitialAd = mManager.getMInterstitialAd();
+        if(!mManager.isPremium()){
+            final InterstitialAd mInterstitialAd = mManager.getMInterstitialAd();
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+                PersistantStorage.addProperty("LASTADS",date);
+            } else {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
 
+                        if (mInterstitialAd.isLoaded()) {
+                            mInterstitialAd.show();
+                            PersistantStorage.addProperty("LASTADS",date);
+                        }else{
+                            Log.d("TAG","НЕГОТОВО");
+                        }
 
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-            PersistantStorage.addProperty("LASTADS",date);
-        } else {
-
-
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-
-                    if (mInterstitialAd.isLoaded()) {
-                        mInterstitialAd.show();
-                        PersistantStorage.addProperty("LASTADS",date);
-                    }else{
-                        Log.d("TAG","НЕГОТОВО");
                     }
+                }, 5000); //specify the number of milliseconds
 
-                }
-            }, 5000); //specify the number of milliseconds
-
-
+            }
         }
-
     }
 
     private void initialFirebase(){

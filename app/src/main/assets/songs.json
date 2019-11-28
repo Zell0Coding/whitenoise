@@ -1,0 +1,193 @@
+{
+  "songs": [
+    {
+      "name": "rain",
+      "image": "rain",
+      "music": "rain",
+      "music_duplicate": "rain_duplicate",
+      "premium": false
+    },
+    {
+      "name": "white_noise",
+      "image": "white_noise",
+      "music": "whitenoise",
+      "music_duplicate": "whitenoise_duplicate",
+      "premium": false
+    },
+    {
+      "name": "forest",
+      "image": "forest",
+      "music": "forest",
+      "music_duplicate": "forest_duplicate",
+      "premium": false
+    },
+    {
+      "name": "thunder",
+      "image": "thunder",
+      "music": "thunder",
+      "music_duplicate": "thunder_duplicate",
+      "premium": true
+    },
+    {
+      "name": "ocean",
+      "image": "ocean",
+      "music": "ocean",
+      "music_duplicate": "ocean_duplicate",
+      "premium": true
+    },
+    {
+      "name": "wind",
+      "image": "wind",
+      "music": "wind",
+      "music_duplicate": "wind_duplicate",
+      "premium": true
+    },
+    {
+      "name": "river",
+      "image": "river",
+      "music": "river",
+      "music_duplicate": "river_duplicate",
+      "premium": true
+    },
+    {
+      "name": "fire",
+      "image": "fire",
+      "music": "fire",
+      "music_duplicate": "fire_duplicate",
+      "premium": true
+    },
+    {
+      "name": "night",
+      "image": "night",
+      "music": "night",
+      "music_duplicate": "night_duplicate",
+      "premium": true
+    },
+    {
+      "name": "city",
+      "image": "city",
+      "music": "city",
+      "music_duplicate": "city_duplicate",
+      "premium": false
+    },
+    {
+      "name": "pink_noise",
+      "image": "pink_noise",
+      "music": "pink_noise",
+      "music_duplicate": "pinknoise_duplicate",
+      "premium": false
+    },
+    {
+      "name": "airplane",
+      "image": "airplane",
+      "music": "airplane",
+      "music_duplicate": "airplane_duplicate",
+      "premium": false
+    },
+    {
+      "name": "birds",
+      "image": "birds",
+      "music": "birds",
+      "music_duplicate": "birds_duplicate",
+      "premium": true
+    },
+    {
+      "name": "bliss",
+      "image": "bliss",
+      "music": "bliss",
+      "music_duplicate": "bliss_duplicate",
+      "premium": true
+    },
+    {
+      "name": "brown_noise",
+      "image": "brown_noise",
+      "music": "brown_noise",
+      "music_duplicate": "brownnoise_duplicate",
+      "premium": true
+    },
+    {
+      "name": "cat",
+      "image": "cat",
+      "music": "cat",
+      "music_duplicate": "cat_duplicate",
+      "premium": true
+    },
+    {
+      "name": "seagull",
+      "image": "seagull",
+      "music": "seagull",
+      "music_duplicate": "seagull_duplicate",
+      "premium": true
+    },
+    {
+      "name": "heart",
+      "image": "heart",
+      "music": "heart",
+      "music_duplicate": "heart_duplicate",
+      "premium": true
+    },
+    {
+      "name": "fan",
+      "image": "fan",
+      "music": "fan",
+      "music_duplicate": "fan_duplicate",
+      "premium": false
+    },
+    {
+      "name": "dolphin",
+      "image": "dolphin",
+      "music": "dolphin",
+      "music_duplicate": "dolphin_duplicate",
+      "premium": false
+    },
+    {
+      "name": "owl",
+      "image": "owl",
+      "music": "owl",
+      "music_duplicate": "owl_duplicate",
+      "premium": false
+    },
+    {
+      "name": "street",
+      "image": "street",
+      "music": "street",
+      "music_duplicate": "street_duplicate",
+      "premium": true
+    },
+    {
+      "name": "train",
+      "image": "train",
+      "music": "train",
+      "music_duplicate": "train_duplicate",
+      "premium": true
+    },
+    {
+      "name": "underwater",
+      "image": "underwater",
+      "music": "underwater",
+      "music_duplicate": "underwater_duplicate",
+      "premium": true
+    },
+    {
+      "name": "vinyl",
+      "image": "vinyl",
+      "music": "vinyl",
+      "music_duplicate": "vinyl_duplicate",
+      "premium": true
+    },
+    {
+      "name": "waterfall",
+      "image": "waterfall",
+      "music": "waterfall",
+      "music_duplicate": "waterfall_duplicate",
+      "premium": true
+    },
+    {
+      "name": "wolf",
+      "image": "wolf",
+      "music": "wolf",
+      "music_duplicate": "wolf_duplicate",
+      "premium": true
+    }
+  ]
+}

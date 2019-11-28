@@ -1,5 +1,8 @@
 package com.ponicamedia.android.whitenoise.Utills;
 
+import android.widget.ImageButton;
+import android.widget.ImageView;
+
 import com.ponicamedia.android.whitenoise.Models.Languages;
 import com.ponicamedia.android.whitenoise.Models.Sound;
 import com.ponicamedia.android.whitenoise.Models.Timer;
@@ -29,6 +32,10 @@ public interface i_helper {
     interface i_timer_servies{
         void startTimer(Timer timer);
         void stopTimer();
+    }
+
+    interface clickMusic{
+        void soundClick(final Sound sound, final ImageButton button, final ImageView img);
     }
 
 }

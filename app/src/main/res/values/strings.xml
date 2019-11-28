@@ -20,6 +20,16 @@
     <string name="saturday">SA</string>
     <string name="Sunday">SU</string>
     <string name="language">Language</string>
+    <string name="podpiska" translatable="false">Подписка</string>
     <string name="sleep_words">Time to go to bed!</string>
+    
+    <string name="buy_label" translatable="false">Спокойный сон уже ждет вас!</string>
+    <string name="buy_first" translatable="false"> - Полный доступ к нашей коллекции релаксирующих звуков для сна.</string>
+    <string name="buy_second" translatable="false"> - Подписка отключает всю рекламу в нашем приложении – совсем всю!</string>
+    <string name="buy_third" translatable="false"> - Гарантированное улучшение сна – доказано психологами и врачами.</string>
+    <string name="buy_otmena" translatable="false"> - Вы можете отменить подписку в любой момент!</string>
+    <string name="buy_fourth" translatable="false">Доступ ко всем звукам на 7 дней БЕСПЛАТНО!</string>
+    <string name="buy_button" translatable="false">Попробовать</string>
+    <string name="buy_info" translatable="false">Стоимость подписки после пробного периода – 259 рублей в месяц.</string>
 
 </resources>

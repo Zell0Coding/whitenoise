@@ -10,405 +10,65 @@
     tools:context=".Controllers.MainActivity">
 
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="80dp">
 
-        <LinearLayout
+
+        <androidx.core.widget.NestedScrollView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <androidx.gridlayout.widget.GridLayout
-                android:id="@+id/grid_layout"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:rowCount="3"
-                app:columnCount="3"
-                app:alignmentMode="alignMargins"
-                app:columnOrderPreserved="false"
-                app:layout_constraintTop_toTopOf="parent"
-                android:padding="14dp">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <!-- ROW 1 -->
-                <!-- COUNT 1 -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    app:cardBackgroundColor="@android:color/transparent"
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    app:cardCornerRadius="22dp">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <androidx.gridlayout.widget.GridLayout
+                        android:id="@+id/grid_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="14dp"
+                        android:paddingBottom="14dp"
+                        app:alignmentMode="alignMargins"
+                        app:useDefaultMargins="true"
+                        app:columnCount="9"
+                        app:columnOrderPreserved="false"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:rowCount="3">
 
-                        <ImageButton
-                            android:id="@+id/white_noise"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/white_noise"
-                            android:background="@android:color/transparent"
-                            android:scaleType="fitXY">
-                        </ImageButton>
 
-                        <ImageView
-                            android:id="@+id/white_noise_indicator"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/ic_outline_play_circle_filled_white"
-                            android:layout_centerInParent="true"
-                            android:background="@android:color/transparent">
+                    </androidx.gridlayout.widget.GridLayout>
 
-                        </ImageView>
+                </HorizontalScrollView>
 
-                    </RelativeLayout>
-
-
-                </androidx.cardview.widget.CardView>
-                <!-- COUNT 2 -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    app:cardElevation="8dp"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    app:cardCornerRadius="22dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageButton
-                            android:id="@+id/rain"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/rain"
-                            android:background="@android:color/transparent"
-                            android:scaleType="fitXY">
-                        </ImageButton>
-
-                        <ImageView
-                            android:id="@+id/rain_indicator"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/ic_outline_play_circle_filled_white"
-                            android:layout_centerInParent="true"
-                            android:background="@android:color/transparent">
-
-                        </ImageView>
-
-                    </RelativeLayout>
-
-
-                </androidx.cardview.widget.CardView>
-                <!-- COUNT 3 -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    app:cardCornerRadius="22dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageButton
-                            android:id="@+id/thunder"
-                            android:background="@android:color/transparent"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/thunder"
-                            android:scaleType="fitXY">
-                        </ImageButton>
-
-                        <ImageView
-                            android:id="@+id/thunder_indicator"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/ic_outline_play_circle_filled_white"
-                            android:layout_centerInParent="true"
-                            android:background="@android:color/transparent">
-
-                        </ImageView>
-
-                    </RelativeLayout>
-
-
-                </androidx.cardview.widget.CardView>
-
-                <!-- ROW 2 -->
-                <!-- COUNT 1 -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    app:cardCornerRadius="22dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageButton
-                            android:id="@+id/ocean"
-                            android:background="@android:color/transparent"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/ocean"
-                            android:scaleType="fitXY">
-                        </ImageButton>
-
-                        <ImageView
-                            android:id="@+id/ocean_indicator"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/ic_outline_play_circle_filled_white"
-                            android:layout_centerInParent="true"
-                            android:background="@android:color/transparent">
-
-                        </ImageView>
-
-                    </RelativeLayout>
-
-
-                </androidx.cardview.widget.CardView>
-                <!-- COUNT 2 -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    app:cardCornerRadius="22dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageButton
-                            android:id="@+id/wind"
-                            android:background="@android:color/transparent"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/wind"
-                            android:scaleType="fitXY">
-                        </ImageButton>
-
-                        <ImageView
-                            android:id="@+id/wind_indicator"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/ic_outline_play_circle_filled_white"
-                            android:layout_centerInParent="true"
-                            android:background="@android:color/transparent">
-
-                        </ImageView>
-
-                    </RelativeLayout>
-
-
-                </androidx.cardview.widget.CardView>
-                <!-- COUNT 3 -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    app:cardCornerRadius="22dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageButton
-                            android:id="@+id/river"
-                            android:background="@android:color/transparent"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/river"
-                            android:scaleType="fitXY">
-                        </ImageButton>
-
-                        <ImageView
-                            android:id="@+id/river_indicator"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/ic_outline_play_circle_filled_white"
-                            android:layout_centerInParent="true"
-                            android:background="@android:color/transparent">
-
-                        </ImageView>
-
-                    </RelativeLayout>
-
-
-                </androidx.cardview.widget.CardView>
-
-                <!-- ROW 3 -->
-                <!-- COUNT 1 -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    app:cardCornerRadius="22dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageButton
-                            android:id="@+id/fire"
-                            android:background="@android:color/transparent"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/fire"
-                            android:scaleType="fitXY">
-                        </ImageButton>
-
-                        <ImageView
-                            android:id="@+id/fire_indicator"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/ic_outline_play_circle_filled_white"
-                            android:layout_centerInParent="true"
-                            android:background="@android:color/transparent">
-
-                        </ImageView>
-
-                    </RelativeLayout>
-
-
-                </androidx.cardview.widget.CardView>
-                <!-- COUNT 2 -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    app:cardCornerRadius="22dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageButton
-                            android:id="@+id/forest"
-                            android:background="@android:color/transparent"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/forest"
-                            android:scaleType="fitXY">
-                        </ImageButton>
-
-                        <ImageView
-                            android:id="@+id/forest_indicator"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/ic_outline_play_circle_filled_white"
-                            android:layout_centerInParent="true"
-                            android:background="@android:color/transparent">
-
-                        </ImageView>
-
-                    </RelativeLayout>
-
-
-                </androidx.cardview.widget.CardView>
-                <!-- COUNT 3 -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_columnWeight="1"
-                    app:layout_rowWeight="1"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    app:cardCornerRadius="22dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageButton
-                            android:id="@+id/night"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/night"
-                            android:background="@android:color/transparent"
-                            android:scaleType="fitXY">
-                        </ImageButton>
-
-                        <ImageView
-                            android:id="@+id/night_indicator"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/ic_outline_play_circle_filled_white"
-                            android:layout_centerInParent="true"
-                            android:background="@android:color/transparent">
-
-                        </ImageView>
-
-                    </RelativeLayout>
-
-
-                </androidx.cardview.widget.CardView>
-
-
-            </androidx.gridlayout.widget.GridLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/play_recycler"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                </androidx.recyclerview.widget.RecyclerView>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/play_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-            </RelativeLayout>
+                    </androidx.recyclerview.widget.RecyclerView>
 
-        </LinearLayout>
+                </RelativeLayout>
 
-    </androidx.core.widget.NestedScrollView>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+
+
+
 
     <RelativeLayout
         android:id="@+id/button_wrapper"
