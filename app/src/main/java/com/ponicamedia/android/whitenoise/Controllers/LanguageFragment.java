@@ -36,6 +36,7 @@ import com.ponicamedia.android.whitenoise.Models.Languages;
 import com.ponicamedia.android.whitenoise.Models.currentLanguage;
 import com.ponicamedia.android.whitenoise.R;
 import com.ponicamedia.android.whitenoise.Utills.Manager;
+import com.ponicamedia.android.whitenoise.Utills.PersistantStorage;
 import com.ponicamedia.android.whitenoise.Utills.StorageManager;
 import com.ponicamedia.android.whitenoise.Utills.Utill;
 import com.ponicamedia.android.whitenoise.Utills.i_helper;
@@ -48,6 +49,9 @@ import java.util.Map;
 
 public class LanguageFragment extends Fragment implements i_helper.i_language,PurchasesUpdatedListener {
 
+    public static final int BUY_FRAGMENT = 2;
+
+    private int current_fragment;
 
     public interface selectLanguage{
         void select();
@@ -84,6 +88,11 @@ public class LanguageFragment extends Fragment implements i_helper.i_language,Pu
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mManager = Manager.getInstance();
+
+        if(getArguments()!=null){
+            current_fragment = getArguments().getInt("fragment");
+        }
+
         try {
             getActivity().getActionBar().setTitle(R.string.settings);
         }catch (NullPointerException e){
@@ -144,6 +153,13 @@ public class LanguageFragment extends Fragment implements i_helper.i_language,Pu
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if(current_fragment == BUY_FRAGMENT){
+            language.setVisibility(View.GONE);
+            podpiska.setVisibility(View.VISIBLE);
+            tabs.getTabAt(1).select();
+        }
+
     }
 
 
@@ -204,10 +220,8 @@ public class LanguageFragment extends Fragment implements i_helper.i_language,Pu
                             takePremium();
                         }
                     }
-
                 }
             }
-
             @Override
             public void onBillingServiceDisconnected() {
 
@@ -219,7 +233,10 @@ public class LanguageFragment extends Fragment implements i_helper.i_language,Pu
     // ПОКУПКА
     private void OnConnectToBuy(){
 
+        //TODO: DELETE
         mManager.setPremium(true);
+        PersistantStorage.init(getContext());
+        PersistantStorage.addProperty("premium",true);
 
             BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder()
                     .setSku("whitenoisepodpiska")

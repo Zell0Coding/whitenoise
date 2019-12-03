@@ -214,6 +214,8 @@ public class musicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if(!include){
             sounds.add(_sound);
             sound_helper.addSound(_sound, reCreate);
+            update.update(_sound.getName(),true);
+
             //notifyItemChanged(current_id);
             notifyDataSetChanged();
 

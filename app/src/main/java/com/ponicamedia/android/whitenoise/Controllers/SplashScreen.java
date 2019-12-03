@@ -3,6 +3,7 @@ package com.ponicamedia.android.whitenoise.Controllers;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.util.Log;
 
@@ -54,6 +55,7 @@ public class SplashScreen extends AppCompatActivity {
         stopService(new Intent(getApplicationContext(), timeServices.class));
 
         mManager = Manager.getInstance();
+        PersistantStorage.init(getApplicationContext());
 
         loadCasheMusic();
         progress();
@@ -73,14 +75,18 @@ public class SplashScreen extends AppCompatActivity {
 
         Purchase.PurchasesResult subscriptionResult =
                 billingClient.queryPurchases(BillingClient.SkuType.SUBS);
-        int responseCode = billingClient.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS);
 
-        if(responseCode == BillingClient.BillingResponse.OK){
+        if(subscriptionResult.getResponseCode() == BillingClient.BillingResponse.OK && subscriptionResult.getPurchasesList().size() > 0){
             mManager.setPremium(true);
+            Log.d("has","has");
+        }else if(subscriptionResult.getResponseCode() == BillingClient.BillingResponse.SERVICE_UNAVAILABLE
+                || subscriptionResult.getResponseCode() == BillingClient.BillingResponse.SERVICE_DISCONNECTED){
+            mManager.setPremium(PersistantStorage.getProperty("premium"));
+            Log.d("?","internet-");
         }else{
             mManager.setPremium(false);
+            Log.d("not has","-");
         }
-
 
     }
 

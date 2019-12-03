@@ -77,10 +77,10 @@ public abstract class Utill {
     public static final int CLOSE_INDICATOR = R.drawable.close;
 
     // --------------------- ФАЙЛЫ ---------------------------
-    public static final String SELECTED_SOUND = "selected_sound";
-    public static final String TIMER_SELECTED = "selected_timers";
-    public static final String LANGUAGE = "language";
-    public static final String ASLEEP = "asleep";
+    public static final String SELECTED_SOUND = "selected_sound_1";
+    public static final String TIMER_SELECTED = "selected_timers_1";
+    public static final String LANGUAGE = "language_1";
+    public static final String ASLEEP = "asleep_1";
     // -------------------------------------------------------
 
     public static final String API_METRIKA = "e1a03adf-86e2-41f7-a195-89af282ea5a6";

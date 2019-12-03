@@ -53,7 +53,7 @@ public class SoundListiner  {
                Sound mainSound = new Sound(_sound);
                Sound duplicateSound = new Sound(_sound);
 
-               mainSound.setSound_sec(10000);
+               mainSound.setSound_sec(3000);
                duplicateSound.setSound_sec(0);
 
                soundListiner.put(mainSound,main);
@@ -153,7 +153,7 @@ public class SoundListiner  {
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
-                    mediaPlayer.seekTo(10000);
+                    mediaPlayer.seekTo(3000);
                     if(_sound.isEnabled()){
                         mediaPlayer.start();
                     }

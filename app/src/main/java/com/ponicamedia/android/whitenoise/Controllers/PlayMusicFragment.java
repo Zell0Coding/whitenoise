@@ -1,5 +1,6 @@
 package com.ponicamedia.android.whitenoise.Controllers;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TimePicker;
 
@@ -19,9 +21,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.ponicamedia.android.whitenoise.Adapters.PagesAdapter;
 import com.ponicamedia.android.whitenoise.Adapters.musicAdapter;
 import com.ponicamedia.android.whitenoise.Models.CasheSounds;
 import com.ponicamedia.android.whitenoise.Models.Sound;
@@ -35,22 +39,32 @@ import com.ponicamedia.android.whitenoise.Utills.i_helper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayMusicFragment extends Fragment implements View.OnClickListener,  musicAdapter.updateButton, i_helper.i_sound, i_helper.clickMusic {
+public class PlayMusicFragment extends Fragment implements View.OnClickListener,  musicAdapter.updateButton, i_helper.i_sound,  PagesAdapter.getSound {
 
+    public interface openBuyFragment{
+        void openBuy();
+    }
 
-
-    private ItemTouchHelper mItemTouchHelper;
+    private openBuyFragment main;
     private Manager mManager;
-    private GridLayout mGridLayout;
     private musicAdapter mMusicAdapter;
     private RecyclerView mRecyclerView;
-
+    private ViewPager pager;
 
     private ImageButton allPlay;
+    private PagesAdapter pagesAdapter;
 
     private RelativeLayout buttonWrapper;
     private List<Sound> sounds;
 
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        main = (openBuyFragment) context;
+
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,15 +78,21 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.play_fragment,container,false);
 
+        pager = view.findViewById(R.id.pager);
 
-        mGridLayout = view.findViewById(R.id.grid_layout);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+//setting margins around imageimageview
+        params.height=mManager.getWidth()-96-28; //left, top, right, bottom
+
+
+        pager.setLayoutParams(params);
+
         allPlay = view.findViewById(R.id.play_all);
         buttonWrapper = view.findViewById(R.id.button_wrapper);
 
         allPlay.setOnClickListener(this);
-
-
-        mGridLayout.setMinimumHeight(mManager.getWidth()-96-28);
 
         mRecyclerView = view.findViewById(R.id.play_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -92,11 +112,7 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     private void InitialSounds(){
         for (int i = 0; i < mManager.getCasheSounds().songs.size(); i++){
 
-            View view = View.inflate(getContext(), R.layout.play_item, null);
             CasheSounds.SoundItem vol = mManager.getCasheSounds().songs.get(i);
-
-            ImageButton button = view.findViewById(R.id.button);
-            ImageView indicator = view.findViewById(R.id.indicator);
 
             String button_path = vol.image;
             String sound_path = vol.music;
@@ -106,23 +122,19 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
             int id = getResources().getIdentifier(button_path, "drawable", getContext().getPackageName());
             int sound = getResources().getIdentifier(sound_path,"raw",getContext().getPackageName());
             int sound_dupl = getResources().getIdentifier(sound_duplicate_path,"raw",getContext().getPackageName());
-            int indicator_path = (mManager.getCasheSounds().songs.get(i).premium && !mManager.isPremium()) ? Utill.CLOSE_INDICATOR : Utill.PLAY_INDICATOR;
 
             Log.d("name",""+sound);
 
-            button.setImageDrawable(getResources().getDrawable(id));
-            indicator.setImageDrawable(getResources().getDrawable(indicator_path));
 
-            Sound item = new Sound(vol.name,id,sound,sound_dupl,0.5f,true,0,vol.premium);
-
-            soundClick(item,button,indicator);
-            view.setTag(vol.name);
-
+            Sound item = new Sound(vol.name,id,sound,sound_dupl,0.5f,false,0,vol.premium);
             sounds.add(item);
-            mGridLayout.addView(view);
         }
 
-        reCreateSounds(); // пересоздаем звуки с предыдущей сессии
+        pagesAdapter = new PagesAdapter(getContext(),this);
+        pager.setAdapter(pagesAdapter);
+        pager.setCurrentItem(1);
+
+        reCreateSounds(); // пересоздаем звуки с предыдущей сессии*/
 
     }
 
@@ -142,27 +154,6 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
         }
     }
 
-
-    @Override
-    public void soundClick(final Sound sound, final ImageButton button, final ImageView img) {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                    if(sound.isPremium() && mManager.isPremium()){
-
-                        img.setImageResource(R.drawable.ic_feather_pause_circle);
-                        mMusicAdapter.addNewSong(sound,false);
-                        updateStateAllButtonIcon();
-                    }else if(!sound.isPremium()){
-                        img.setImageResource(R.drawable.ic_feather_pause_circle);
-                        mMusicAdapter.addNewSong(sound,false);
-                        updateStateAllButtonIcon();
-                    }
-                }
-
-        });
-    }
 
     @Override
     public void onClick(View v) {
@@ -196,34 +187,16 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     }
     @Override
     public void update(String name, boolean enable) {
-        int indicator = (enable) ? R.drawable.ic_feather_pause_circle : R.drawable.ic_outline_play_circle_filled_white;
-        View element;
-
-        for(int i = 0; i < sounds.size(); i++){
+        Log.d("+","update:" + name);
+        for (int i = 0; i < sounds.size();i++){
             if(sounds.get(i).getName().equals(name)){
-                element = getViewChild(name);
-
-                if(element!=null){
-                    ImageView img = element.findViewById(R.id.indicator);
-                    img.setImageResource(indicator);
-                }
-
+                sounds.get(i).setEnabled(enable);
+                break;
             }
         }
-
+        pagesAdapter.updateSoundState(name,enable);
     }
 
-    private View getViewChild(String name){
-        View view = null;
-
-        for(int i = 0; i < mGridLayout.getChildCount(); i++){
-            if(mGridLayout.getChildAt(i).getTag().equals(name)){
-                view = mGridLayout.getChildAt(i);
-            }
-        }
-
-        return view;
-    }
 
     private void updateStateAllButtonIcon(){
 
@@ -327,4 +300,31 @@ public class PlayMusicFragment extends Fragment implements View.OnClickListener,
     }
 
     // -------------------------------------------------------
+
+
+    @Override
+    public List<Sound> getSounds() {
+        return sounds;
+    }
+
+    @Override
+    public boolean hasPremium() {
+        return mManager.isPremium();
+    }
+
+    @Override
+    public void clickOnSound(Sound sound){
+
+        if(sound.isPremium() && mManager.isPremium()){
+            mMusicAdapter.addNewSong(sound,false);
+            updateStateAllButtonIcon();
+        }else if(!sound.isPremium()){
+            mMusicAdapter.addNewSong(sound,false);
+            updateStateAllButtonIcon();
+        }else{
+            main.openBuy();
+        }
+    }
+
+
 }

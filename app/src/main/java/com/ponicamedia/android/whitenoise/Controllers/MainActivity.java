@@ -48,7 +48,11 @@ import com.yandex.metrica.YandexMetricaConfig;
 import java.util.Date;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements LanguageFragment.selectLanguage, i_helper.i_timer_servies{
+public class MainActivity extends AppCompatActivity implements LanguageFragment.selectLanguage, i_helper.i_timer_servies, PlayMusicFragment.openBuyFragment
+{
+
+
+
 
 
     private Manager mManager;
@@ -338,6 +342,8 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
         }
     }
 
+
+
     @Override
     public void restartSettings() {
         addFragment(Utill.SETTINGS);
@@ -403,4 +409,25 @@ public class MainActivity extends AppCompatActivity implements LanguageFragment.
             Toast.makeText(getApplicationContext(),"CODE-"+resultCode,Toast.LENGTH_SHORT).show();
         }*/
     }
+
+        @Override
+        public void openBuy() {
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("fragment",2);
+
+            LanguageFragment languageFragment = new LanguageFragment();
+            languageFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.container,languageFragment,"settings").commit();
+            getSupportFragmentManager().beginTransaction().addToBackStack(null);
+
+            mActionBar.setDisplayHomeAsUpEnabled(true);
+            mActionBar.setDisplayShowHomeEnabled(true);
+            mActionBar.setDisplayShowTitleEnabled(true);
+            mActionBar.setTitle(R.string.settings);
+
+
+        }
+
 }
+

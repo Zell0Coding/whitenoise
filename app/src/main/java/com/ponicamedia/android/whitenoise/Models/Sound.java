@@ -1,7 +1,5 @@
 package com.ponicamedia.android.whitenoise.Models;
 
-import android.widget.ImageButton;
-import android.widget.ImageView;
 
 public class Sound {
 
@@ -15,26 +13,6 @@ public class Sound {
     private float vol_for_fade;
     private boolean enabled;
     private boolean isPremium;
-
-    public ImageButton getButton() {
-        return button;
-    }
-
-    public void setButton(ImageButton button) {
-        this.button = button;
-    }
-
-    public ImageView getIndicator() {
-        return indicator;
-    }
-
-    public void setIndicator(ImageView indicator) {
-        this.indicator = indicator;
-    }
-
-    private ImageButton button;
-    private ImageView indicator;
-
 
     public Sound(Sound sound){
         this.name = sound.name;
